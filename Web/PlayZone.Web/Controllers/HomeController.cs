@@ -3,13 +3,28 @@
     using System.Diagnostics;
 
     using Microsoft.AspNetCore.Mvc;
+    using PlayZone.Services.Data;
+    using PlayZone.Services.Mapping;
     using PlayZone.Web.ViewModels;
+    using PlayZone.Web.ViewModels.Home;
 
     public class HomeController : BaseController
     {
+        private readonly IVideosService videosService;
+
+        public HomeController(IVideosService videosService)
+        {
+            this.videosService = videosService;
+        }
+
         public IActionResult Index()
         {
-            return this.View();
+            var viewModel = new IndexViewModel
+            {
+                Videos = this.videosService.GetAll<IndexVideosViewModel>(),
+            };
+
+            return this.View(viewModel);
         }
 
         public IActionResult Privacy()
