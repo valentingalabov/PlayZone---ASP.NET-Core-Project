@@ -6,5 +6,6 @@ namespace PlayZone.Web.ViewModels.Videos
 {
     class ListingVideoViewModel
     {
+
     }
 }
