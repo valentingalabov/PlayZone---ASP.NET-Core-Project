@@ -1,0 +1,42 @@
+﻿@model PlayZone.Web.ViewModels.Videos.VideoCreateInputModel
+
+@{
+    ViewData["Title"] = "Inport Video";
+}
+
+<div class="text-center">
+    <h1>Import Your Video</h1>
+
+    <div class="pagination-centered">
+        <form method="post" asp-controller="VideosController" asp-action="Create">
+            <div>
+                <label asp-for="Title"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="Url"></label>
+                <input asp-for="Url" class="form-control" />
+                <span asp-validation-for="Url" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="CategoryId"></label>
+                <select asp-for="CategoryId" asp-items="Model.Categories.Select(x=> new SelectListItem(x.Name, x.Id.ToString()))" class="form-control"></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" rows="5" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <hr />
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+
+
+        </form>
+    </div>
+</div>

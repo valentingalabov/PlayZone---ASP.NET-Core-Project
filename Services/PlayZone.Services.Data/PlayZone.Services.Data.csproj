@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\PlayZone.Data.Common\PlayZone.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\PlayZone.Data.Models\PlayZone.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\PlayZone.Web.ViewModels\PlayZone.Web.ViewModels.csproj" />
     <ProjectReference Include="..\PlayZone.Services.Mapping\PlayZone.Services.Mapping.csproj" />
   </ItemGroup>
 

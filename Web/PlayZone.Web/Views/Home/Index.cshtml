@@ -4,25 +4,41 @@
     this.ViewData["Title"] = "Home Page";
 }
 
-@foreach (var video in Model.Videos)
-{
-    <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">@video.Title</h5>
-                @if (video.AddBefore.Days >= 1)
-                {
-                    <small>Added before: @video.AddBefore.Hours Hours</small>
-                }
-                else
-                {
-                    <small>Added before: @video.AddBefore.Days Hours</small>
-                }
-                
-            </div>
-            <p class="mb-1">@video.UserUserName</p>
-            <small>Donec id elit non mi porta.</small>
-        </a>
+<div class="row">
 
-    </div>
-}
+    @foreach (var video in Model.Videos)
+    {
+        <div class="col-lg-4 col-md-12">
+
+            <!--Card Wider-->
+            <div class="card card-cascade wider">
+
+                <!--Card image-->
+                <div class="view view-cascade overlay">
+                    <a href="\videos\@video.Id">
+                        <img src="http://i3.ytimg.com/vi/@video.Url/maxresdefault.jpg" class="card-img-top"
+                             alt="wider">
+                    </a>
+
+                </div>
+                <!--/Card image-->
+                <!--Card content-->
+                <div class="card-body card-body-cascade text-center">
+                    <!--Title-->
+                    <a href="\videos\@video.Id"><h4 class="card-title"><strong>@video.Title</strong></h4></a>
+                    <hr />
+                    <p class="card-text">
+                        Chanel: @video.UserUserName
+                    </p>
+                    <p class="card-text">
+                       Before: @video.AddBefore
+                    </p>
+                </div>
+                <!--/.Card content-->
+
+            </div>
+            <!--/.Card Wider-->
+
+        </div>
+    }
+</div>
