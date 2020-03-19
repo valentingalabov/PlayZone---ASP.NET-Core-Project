@@ -15,15 +15,14 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IVideosService videosService;
 
-        public VideosController(ICategoriesService categoriesService,
-             UserManager<ApplicationUser> userManager,
-             IVideosService videosService)
+        public VideosController(ICategoriesService categoriesService, UserManager<ApplicationUser> userManager, IVideosService videosService)
         {
             this.categoriesService = categoriesService;
             this.userManager = userManager;
             this.videosService = videosService;
         }
 
+        [HttpGet]
         [Authorize]
         public IActionResult Create()
         {
@@ -48,7 +47,19 @@
 
             var videoId = await this.videosService.CreateVideoAsync(input.Title, input.Url, input.Description, input.CategoryId, user.Id);
 
-            return this.Redirect("Index");
+            return this.RedirectToAction("Details", new { Id = videoId });
+        }
+
+        public IActionResult Details(string id)
+        {
+            var videoViewModel = this.videosService.GetVideoById<VideoDetailsViewModel>(id);
+
+            if (videoViewModel == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.View(videoViewModel);
         }
     }
 }

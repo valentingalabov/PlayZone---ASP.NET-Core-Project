@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using PlayZone.Data.Common.Repositories;
     using PlayZone.Data.Models;
     using PlayZone.Services.Mapping;
@@ -35,6 +36,13 @@
             await this.videosRepository.SaveChangesAsync();
 
             return video.Id;
+        }
+
+        public T GetVideoById<T>(string id)
+        {
+            var video = this.videosRepository.All().Where(v => v.Id == id).To<T>().FirstOrDefault();
+
+            return video;
         }
 
         public IEnumerable<T> GetAllVieos<T>()

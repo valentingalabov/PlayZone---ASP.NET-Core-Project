@@ -8,5 +8,7 @@
         IEnumerable<T> GetAllVieos<T>();
 
         Task<string> CreateVideoAsync(string title, string url, string description, int categoryId, string userId);
+
+        T GetVideoById<T>(string id);
     }
 }
