@@ -1,7 +1,7 @@
 ﻿namespace PlayZone.Web
 {
     using System.Reflection;
-
+    using CloudinaryDotNet;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -52,6 +52,13 @@
             });
             services.AddRazorPages();
 
+            Account account = new Account(
+                           this.configuration["Cloudinary:AppName"],
+                           this.configuration["Cloudinary:AppKey"],
+                           this.configuration["Cloudinary:AppSecret"]);
+
+            Cloudinary cloudinary = new Cloudinary(account);
+
             services.AddSingleton(this.configuration);
 
             // Data repositories
@@ -60,10 +67,12 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
             services.AddScoped<IVideosService, VideosService>();
             services.AddScoped<ICategoriesService, CategoriesService>();
+            services.AddScoped<IChanelsService, ChanelsService>();
 
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddSingleton(cloudinary);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PlayZone.Data;
 
 namespace PlayZone.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200319172621_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -293,9 +295,6 @@ namespace PlayZone.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -306,15 +305,11 @@ namespace PlayZone.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
-
-                    b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Chanels");
                 });
@@ -491,11 +486,13 @@ namespace PlayZone.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PlayZone.Data.Models.Chanel", b =>
+            modelBuilder.Entity("PlayZone.Data.Models.ApplicationUser", b =>
                 {
-                    b.HasOne("PlayZone.Data.Models.ApplicationUser", "User")
-                        .WithOne("Chanel")
-                        .HasForeignKey("PlayZone.Data.Models.Chanel", "UserId");
+                    b.HasOne("PlayZone.Data.Models.Chanel", "Chanel")
+                        .WithOne("User")
+                        .HasForeignKey("PlayZone.Data.Models.ApplicationUser", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PlayZone.Data.Models.Comment", b =>

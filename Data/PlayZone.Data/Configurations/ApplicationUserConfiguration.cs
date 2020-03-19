@@ -28,6 +28,11 @@
                 .HasForeignKey(e => e.UserId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
+
+            //appUser
+            //    .HasOne(c => c.Chanel)
+            //    .WithOne(u => u.User)
+            //    .HasForeignKey<Chanel>(u => u.Id);
         }
     }
 }

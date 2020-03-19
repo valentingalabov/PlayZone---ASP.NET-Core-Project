@@ -28,6 +28,10 @@
 
         public string UserId { get; set; }
 
+        public string ChanelId { get; set; }
+
+        public virtual Chanel Chanel { get; set; }
+
         public virtual ApplicationUser User { get; set; }
 
         public virtual IEnumerable<Comment> Comments { get; set; }

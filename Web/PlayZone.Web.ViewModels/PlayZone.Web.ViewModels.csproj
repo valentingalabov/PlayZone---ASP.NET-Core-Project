@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Data\PlayZone.Data.Models\PlayZone.Data.Models.csproj" />
+    <ProjectReference Include="..\..\PlayZone.Common\PlayZone.Common.csproj" />
     <ProjectReference Include="..\..\Services\PlayZone.Services.Mapping\PlayZone.Services.Mapping.csproj" />
   </ItemGroup>
 

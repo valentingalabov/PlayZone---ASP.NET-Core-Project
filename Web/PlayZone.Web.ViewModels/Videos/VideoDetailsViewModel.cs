@@ -1,8 +1,9 @@
 ﻿namespace PlayZone.Web.ViewModels.Videos
 {
+    using System;
+
     using PlayZone.Data.Models;
     using PlayZone.Services.Mapping;
-    using System;
 
     public class VideoDetailsViewModel : IMapFrom<Video>
     {

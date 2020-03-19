@@ -10,8 +10,8 @@ using PlayZone.Data;
 namespace PlayZone.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200316200933_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200319173402_InitialCreate1")]
+    partial class InitialCreate1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -174,6 +174,9 @@ namespace PlayZone.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("ChanelId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -278,6 +281,39 @@ namespace PlayZone.Data.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("PlayZone.Data.Models.Chanel", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Chanels");
+                });
+
             modelBuilder.Entity("PlayZone.Data.Models.Comment", b =>
                 {
                     b.Property<int>("Id")
@@ -357,6 +393,9 @@ namespace PlayZone.Data.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ChanelId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -386,6 +425,8 @@ namespace PlayZone.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("ChanelId");
 
                     b.HasIndex("IsDeleted");
 
@@ -445,6 +486,15 @@ namespace PlayZone.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PlayZone.Data.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("PlayZone.Data.Models.Chanel", "Chanel")
+                        .WithOne("User")
+                        .HasForeignKey("PlayZone.Data.Models.ApplicationUser", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("PlayZone.Data.Models.Comment", b =>
                 {
                     b.HasOne("PlayZone.Data.Models.ApplicationUser", "User")
@@ -463,6 +513,10 @@ namespace PlayZone.Data.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("PlayZone.Data.Models.Chanel", "Chanel")
+                        .WithMany("Videos")
+                        .HasForeignKey("ChanelId");
 
                     b.HasOne("PlayZone.Data.Models.ApplicationUser", "User")
                         .WithMany()

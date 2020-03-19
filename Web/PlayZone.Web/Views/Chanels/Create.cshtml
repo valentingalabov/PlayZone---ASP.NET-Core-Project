@@ -1,0 +1,29 @@
+﻿@model PlayZone.Web.ViewModels.Chanels.ChanelCreateInputModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create Your Chanel</h1>
+
+
+<div class="pagination-centered">
+    <form method="post"  asp-action="Create">
+        <div>
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+
+        <div>
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" rows="5" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <hr />
+        <div>
+            <input type="submit" class="btn btn-primary" />
+        </div>
+
+    </form>
+</div>

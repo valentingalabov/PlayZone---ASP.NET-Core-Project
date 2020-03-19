@@ -3,22 +3,23 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using PlayZone.Common.ModelValidation;
     using PlayZone.Data.Models;
     using PlayZone.Services.Mapping;
 
     public class VideoCreateInputModel : IMapFrom<Video>
     {
         [Required(ErrorMessage = "Url is Required!")]
-        [MinLength(3, ErrorMessage = "Url must be in range between 3 and 60 symbols!")]
-        [MaxLength(60, ErrorMessage = "Url must be in range between 3 and 60 symbols!")]
+        [MinLength(VideosAndChanelsModelValidation.MinLenght, ErrorMessage = VideosAndChanelsModelValidation.UrlLenghtErrorMessage)]
+        [MaxLength(VideosAndChanelsModelValidation.MaxLenght, ErrorMessage = VideosAndChanelsModelValidation.UrlLenghtErrorMessage)]
         public string Url { get; set; }
 
         [Required(ErrorMessage = "Title is Required")]
-        [MaxLength(60, ErrorMessage = "Title must be in range between 4 and 60 symbols!")]
-        [MinLength(4, ErrorMessage = "Title must be in range between 4 and 60 symbols!")]
+        [MinLength(VideosAndChanelsModelValidation.MinLenght, ErrorMessage = VideosAndChanelsModelValidation.TitleLenghtErrorMessage)]
+        [MaxLength(VideosAndChanelsModelValidation.MaxLenght, ErrorMessage = VideosAndChanelsModelValidation.TitleLenghtErrorMessage)]
         public string Title { get; set; }
 
-        [MaxLength(6000, ErrorMessage = "Description can't be more than 6000 symbols!")]
+        [MaxLength(VideosAndChanelsModelValidation.DescriptionMaxLenght, ErrorMessage = VideosAndChanelsModelValidation.DescriptionErrorMessage)]
         public string Description { get; set; }
 
         [Range(1, int.MaxValue)]
