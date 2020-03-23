@@ -10,8 +10,8 @@ using PlayZone.Data;
 namespace PlayZone.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200319173402_InitialCreate1")]
-    partial class InitialCreate1
+    [Migration("20200323180218_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -305,11 +305,15 @@ namespace PlayZone.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Chanels");
                 });
@@ -351,6 +355,39 @@ namespace PlayZone.Data.Migrations
                     b.HasIndex("VideoId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("PlayZone.Data.Models.Image", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ChanelId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CloudinaryPublicId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("PlayZone.Data.Models.Setting", b =>
@@ -486,13 +523,11 @@ namespace PlayZone.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PlayZone.Data.Models.ApplicationUser", b =>
+            modelBuilder.Entity("PlayZone.Data.Models.Chanel", b =>
                 {
-                    b.HasOne("PlayZone.Data.Models.Chanel", "Chanel")
-                        .WithOne("User")
-                        .HasForeignKey("PlayZone.Data.Models.ApplicationUser", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.HasOne("PlayZone.Data.Models.ApplicationUser", "User")
+                        .WithOne("Chanel")
+                        .HasForeignKey("PlayZone.Data.Models.Chanel", "UserId");
                 });
 
             modelBuilder.Entity("PlayZone.Data.Models.Comment", b =>
@@ -504,6 +539,15 @@ namespace PlayZone.Data.Migrations
                     b.HasOne("PlayZone.Data.Models.Video", null)
                         .WithMany("Comments")
                         .HasForeignKey("VideoId");
+                });
+
+            modelBuilder.Entity("PlayZone.Data.Models.Image", b =>
+                {
+                    b.HasOne("PlayZone.Data.Models.Chanel", "Chanel")
+                        .WithOne("Image")
+                        .HasForeignKey("PlayZone.Data.Models.Image", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PlayZone.Data.Models.Video", b =>

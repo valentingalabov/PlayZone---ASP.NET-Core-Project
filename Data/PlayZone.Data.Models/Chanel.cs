@@ -13,7 +13,7 @@
             this.Videos = new HashSet<Video>();
         }
 
-        public string ImageUrl { get; set; }
+        public virtual Image Image { get; set; }
 
         public string Title { get; set; }
 

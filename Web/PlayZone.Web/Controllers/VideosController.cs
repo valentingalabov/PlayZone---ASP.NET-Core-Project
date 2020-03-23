@@ -38,12 +38,16 @@
         [Authorize]
         public async Task<IActionResult> Create(VideoCreateInputModel input)
         {
+            var user = await this.userManager.GetUserAsync(this.User);
+            if (user.ChanelId == null)
+            {
+                return this.Redirect("/Chanels/Create");
+            }
+
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
             }
-
-            var user = await this.userManager.GetUserAsync(this.User);
 
             var videoId = await this.videosService.CreateVideoAsync(input.Title, input.Url, input.Description, input.CategoryId, user.Id);
 

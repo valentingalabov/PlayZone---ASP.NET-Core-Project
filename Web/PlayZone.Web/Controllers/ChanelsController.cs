@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using PlayZone.Data.Models;
@@ -56,6 +57,26 @@
             }
 
             return this.View(viewModel);
+        }
+
+        [Authorize]
+        public IActionResult ImageUpload()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> ImageUpload(IFormFile file, string id)
+        {
+            if (file == null || id == null || file.Length > 10485760)
+            {
+                return this.View();
+            }
+
+            await this.chanelsService.UploadAsync(file, id);
+
+            return this.RedirectToAction("Details", new { Id = id });
         }
     }
 }

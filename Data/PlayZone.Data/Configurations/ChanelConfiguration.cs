@@ -12,6 +12,18 @@
                 .HasOne(u => u.User)
                 .WithOne(c => c.Chanel)
                 .HasForeignKey<Chanel>(u => u.UserId);
+
+            chanel
+                .HasOne(i => i.Image)
+                .WithOne(c => c.Chanel)
+                .HasForeignKey<Image>(i => i.Id);
+
+
+
+           // modelBuilder.Entity<Blog>()
+           //.HasOne(b => b.BlogImage)
+           //.WithOne(i => i.Blog)
+           //.HasForeignKey<BlogImage>(b => b.BlogForeignKey);
         }
     }
 }

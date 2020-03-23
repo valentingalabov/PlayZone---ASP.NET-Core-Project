@@ -11,8 +11,10 @@
 
         bool IsValidChanel(string title);
 
-        Task<string> UploadAsync(IFormFile file);
+        Task UploadAsync(IFormFile file, string id);
 
         T GetChanelById<T>(string id);
+
+        Task<string> CreateImage(string url, string cloudinaryPublicId, Chanel currentChanel);
     }
 }
