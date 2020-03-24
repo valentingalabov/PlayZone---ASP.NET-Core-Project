@@ -6,6 +6,6 @@
     {
         public IEnumerable<VideoByChanelViewModel> Videos { get; set; }
 
-        //public ChanelTitleViewModel ChanelTitle { get; set; }
+        public ChanelViewModel Chanel { get; set; }
     }
 }

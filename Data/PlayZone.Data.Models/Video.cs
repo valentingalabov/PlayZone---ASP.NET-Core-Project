@@ -28,6 +28,7 @@
 
         public string UserId { get; set; }
 
+        [Required]
         public string ChanelId { get; set; }
 
         public virtual Chanel Chanel { get; set; }

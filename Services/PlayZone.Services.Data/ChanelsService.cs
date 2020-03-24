@@ -134,7 +134,9 @@
 
         public IEnumerable<T> GetAllVieos<T>(string id)
         {
-            return this.videoReposiroty.All().Where(c => c.ChanelId == id).To<T>().ToList();
+            var videos = this.videoReposiroty.All().Where(v => v.ChanelId == id);
+
+            return videos.To<T>().ToList();
         }
     }
 }

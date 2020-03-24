@@ -11,6 +11,12 @@
 
         public string UserUserName { get; set; }
 
+        public string ChanelId { get; set; }
+
+        public string ChanelTitle { get; set; }
+
+        public string ChanelImageUrl { get; set; }
+
         public string Url { get; set; }
 
         public string Title { get; set; }

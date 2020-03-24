@@ -15,7 +15,11 @@
 
         public int CategoryId { get; set; }
 
-        public string UserUserName { get; set; }
+        public string ChanelTitle { get; set; }
+
+        public string ChanelId { get; set; }
+
+        public string ChanelImageUrl { get; set; }
 
         public DateTime CreatedOn { get; set; }
     }

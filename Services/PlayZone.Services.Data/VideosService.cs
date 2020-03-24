@@ -18,7 +18,7 @@
             this.videosRepository = videosRepository;
         }
 
-        public async Task<string> CreateVideoAsync(string title, string url, string description, int categoryId, string userId)
+        public async Task<string> CreateVideoAsync(string title, string url, string description, int categoryId, string userId, string chanelId)
         {
             var urlToAdd = url.Replace("https://www.youtube.com/watch?v=", string.Empty);
 
@@ -29,6 +29,7 @@
                 CategoryId = categoryId,
                 Description = description,
                 UserId = userId,
+                ChanelId = chanelId,
             };
 
             await this.videosRepository.AddAsync(video);

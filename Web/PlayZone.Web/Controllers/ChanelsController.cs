@@ -91,13 +91,13 @@
 
         public IActionResult Videos(string id)
         {
-            //var chanelTitle = this.chanelsService.GetChanelById<ChanelTitleViewModel>(id);
+            var chanel = this.chanelsService.GetChanelById<ChanelViewModel>(id);
 
             var viewModel = new AllVideosByChanelViewModel
             {
 
                 Videos = this.chanelsService.GetAllVieos<VideoByChanelViewModel>(id),
-                //ChanelTitle = chanelTitle,
+                Chanel = chanel,
             };
 
             return this.View(viewModel);

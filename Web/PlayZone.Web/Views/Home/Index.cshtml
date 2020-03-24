@@ -27,9 +27,16 @@
                     <!--Title-->
                     <a href="/Videos/Details/@video.Id"><h4 class="card-title"><strong>@video.Title</strong></h4></a>
                     <hr />
-                    <p class="card-text">
-                        Chanel: @video.UserUserName
-                    </p>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a href="/Chanels/Details/@video.ChanelId"><img src="http://res.cloudinary.com/dqh6dvohu/image/upload/w_50,c_fill,ar_1:1,g_auto,r_max,bo_2px_solid_blue,b_rgb:ffffff/@video.ChanelImageUrl" /></a>
+                        </div>
+                        <div class="col-md col-9">
+                            <p class="card-text">
+                                Chanel: @video.ChanelTitle
+                            </p>
+                        </div>
+                    </div>
                     <p class="card-text">
                        Before: @video.AddBefore
                     </p>
