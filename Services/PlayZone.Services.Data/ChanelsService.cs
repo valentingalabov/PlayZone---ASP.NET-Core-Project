@@ -1,5 +1,6 @@
 ﻿namespace PlayZone.Services.Data
 {
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
@@ -11,16 +12,23 @@
     using PlayZone.Data.Models;
     using PlayZone.Services.Mapping;
 
+
     public class ChanelsService : IChanelsService
     {
         private readonly IDeletableEntityRepository<Chanel> chanelRepository;
         private readonly IDeletableEntityRepository<Image> imageRepository;
+        private readonly IDeletableEntityRepository<PlayZone.Data.Models.Video> videoReposiroty;
         private readonly Cloudinary cloudinary;
 
-        public ChanelsService(IDeletableEntityRepository<Chanel> chanelRepository, IDeletableEntityRepository<Image> imageRepository, Cloudinary cloudinary)
+        public ChanelsService(
+            IDeletableEntityRepository<Chanel> chanelRepository,
+            IDeletableEntityRepository<Image> imageRepository,
+            IDeletableEntityRepository<PlayZone.Data.Models.Video> videoReposiroty,
+            Cloudinary cloudinary)
         {
             this.chanelRepository = chanelRepository;
             this.imageRepository = imageRepository;
+            this.videoReposiroty = videoReposiroty;
             this.cloudinary = cloudinary;
         }
 
@@ -53,17 +61,14 @@
 
         public async Task UploadAsync(IFormFile file, string id)
         {
-            var currentChanel = this.chanelRepository.All().Where(c => c.Id == id).FirstOrDefault();
+            var currentImage = this.imageRepository.All().FirstOrDefault(c => c.ChanelId == id);
 
-            if (currentChanel.Image != null)
+            if (currentImage != null)
             {
-                this.cloudinary.DeleteResources(currentChanel.Image.Id);
-                currentChanel.Image = null;
+                this.cloudinary.DeleteResources(currentImage.CloudinaryPublicId);
+                this.imageRepository.HardDelete(currentImage);
+                await this.imageRepository.SaveChangesAsync();
             }
-
-            var imageToDelete = this.imageRepository.All().Where(i => i.ChanelId == id).FirstOrDefault();
-            this.imageRepository.HardDelete(imageToDelete);
-            await this.imageRepository.SaveChangesAsync();
 
             byte[] destinationImage;
             ImageUploadResult result;
@@ -86,7 +91,9 @@
             var imageUrl = result.Uri.AbsoluteUri.Replace("http://res.cloudinary.com/dqh6dvohu/image/upload/", string.Empty);
             var publicId = result.PublicId;
 
-            var imageId = this.CreateImage(imageUrl, publicId, currentChanel);
+            var currentChanel = this.chanelRepository.All().Where(c => c.Id == id).FirstOrDefault();
+
+            await this.CreateImage(imageUrl, publicId, currentChanel);
         }
 
         public T GetChanelById<T>(string id)
@@ -96,7 +103,7 @@
             return chanel;
         }
 
-        public async Task<string> CreateImage(string url, string cloudinaryPublicId, Chanel currentChanel)
+        public async Task CreateImage(string url, string cloudinaryPublicId, Chanel currentChanel)
         {
             var image = new Image
             {
@@ -107,11 +114,27 @@
             };
 
             await this.imageRepository.AddAsync(image);
-            currentChanel.Image = image;
+
+            currentChanel.ImageId = image.Id;
 
             await this.imageRepository.SaveChangesAsync();
+        }
 
-            return image.Id;
+        //public string GetChanelDescription(string id)
+        //{
+        //    var chanel = this.chanelRepository.All().Where(c => c.Id == id).FirstOrDefault();
+
+        //    if (chanel != null)
+        //    {
+        //        return chanel.Description;
+        //    }
+
+        //    return null;
+        //}
+
+        public IEnumerable<T> GetAllVieos<T>(string id)
+        {
+            return this.videoReposiroty.All().Where(c => c.ChanelId == id).To<T>().ToList();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace PlayZone.Services.Data
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Http;
@@ -15,6 +16,11 @@
 
         T GetChanelById<T>(string id);
 
-        Task<string> CreateImage(string url, string cloudinaryPublicId, Chanel currentChanel);
+        Task CreateImage(string url, string cloudinaryPublicId, Chanel currentChanel);
+
+        //string GetChanelDescription(string id);
+
+        IEnumerable<T> GetAllVieos<T>(string id);
+
     }
 }

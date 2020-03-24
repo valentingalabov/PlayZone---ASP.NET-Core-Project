@@ -6,7 +6,7 @@
     using PlayZone.Data.Models;
     using PlayZone.Services.Mapping;
 
-    public class ChanelCreateInputModel 
+    public class ChanelCreateInputModel
     {
         [Required(ErrorMessage = "Title is Required!")]
         [MaxLength(VideosAndChanelsModelValidation.MaxLenght, ErrorMessage = VideosAndChanelsModelValidation.TitleLenghtErrorMessage)]

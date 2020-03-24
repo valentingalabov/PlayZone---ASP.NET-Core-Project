@@ -1,0 +1,42 @@
+﻿@model PlayZone.Web.ViewModels.Chanels.AllVideosByChanelViewModel
+@{
+    ViewData["Title"] = "Videos";
+}
+
+<h1>Videos</h1>
+
+@foreach (var video in Model.Videos)
+    {
+<div class="col-lg-4 col-md-12">
+
+    <!--Card Wider-->
+    <div class="card card-cascade wider">
+
+        <!--Card image-->
+        <div class="view view-cascade overlay">
+            <a href="/Videos/Details/@video.Id">
+                <img src="http://i3.ytimg.com/vi/@video.Url/maxresdefault.jpg" class="card-img-top"
+                     alt="wider">
+            </a>
+
+        </div>
+        <!--/Card image-->
+        <!--Card content-->
+        <div class="card-body card-body-cascade text-center">
+            <!--Title-->
+            <a href="/Videos/Details/@video.Id"><h4 class="card-title"><strong>@video.Title</strong></h4></a>
+            <hr />
+            <p class="card-text">
+                Chanel:
+            </p>
+            <p class="card-text">
+                Before: @video.AddBefore
+            </p>
+        </div>
+        <!--/.Card content-->
+
+    </div>
+    <!--/.Card Wider-->
+
+</div>
+    }

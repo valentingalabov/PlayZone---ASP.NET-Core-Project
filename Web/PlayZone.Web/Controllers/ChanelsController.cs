@@ -78,5 +78,30 @@
 
             return this.RedirectToAction("Details", new { Id = id });
         }
+
+        public IActionResult Description(string description)
+        {
+            var viewModel = new ChanelDescriptionViewModel
+            {
+                Description = description,
+            };
+
+            return this.View(viewModel);
+        }
+
+        public IActionResult Videos(string id)
+        {
+            //var chanelTitle = this.chanelsService.GetChanelById<ChanelTitleViewModel>(id);
+
+            var viewModel = new AllVideosByChanelViewModel
+            {
+
+                Videos = this.chanelsService.GetAllVieos<VideoByChanelViewModel>(id),
+                //ChanelTitle = chanelTitle,
+            };
+
+            return this.View(viewModel);
+        }
+
     }
 }
