@@ -50,5 +50,15 @@
         {
             return this.videosRepository.All().To<T>().ToList();
         }
+
+        public bool IsValidVideo(string title, string url)
+        {
+            if (this.videosRepository.All().Any(v => v.Title == title || v.Url == url))
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

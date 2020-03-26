@@ -10,5 +10,8 @@
         Task<string> CreateVideoAsync(string title, string url, string description, int categoryId, string userId, string chanelId);
 
         T GetVideoById<T>(string id);
+
+        bool IsValidVideo(string title, string url);
+
     }
 }

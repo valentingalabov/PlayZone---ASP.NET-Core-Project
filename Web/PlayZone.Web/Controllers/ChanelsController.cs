@@ -47,7 +47,30 @@
             return this.RedirectToAction("Details", new { Id = chanelId });
         }
 
-        public IActionResult Details(string id)
+        public async Task<IActionResult> Details(string id)
+        {
+            if (id == null)
+            {
+                return this.RedirectToAction("Create");
+            }
+
+            var user = await this.userManager.GetUserAsync(this.User);
+            if (user.ChanelId == id)
+            {
+                return this.RedirectToAction("OwnerDetails", new { Id = id });
+            }
+
+            var viewModel = this.chanelsService.GetChanelById<ChanelDetailsViewModel>(id);
+
+            if (viewModel == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.View(viewModel);
+        }
+
+        public IActionResult OwnerDetails(string id)
         {
             var viewModel = this.chanelsService.GetChanelById<ChanelDetailsViewModel>(id);
 

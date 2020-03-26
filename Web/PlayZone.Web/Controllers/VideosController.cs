@@ -45,6 +45,11 @@
                 return this.Redirect("/Chanels/Create");
             }
 
+            if (!this.videosService.IsValidVideo(input.Title, input.Url))
+            {
+                return this.View("Title and Url must be Unique!");
+            }
+
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
