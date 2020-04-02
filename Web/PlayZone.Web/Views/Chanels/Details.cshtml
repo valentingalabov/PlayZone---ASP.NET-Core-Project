@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="btn btn-mdb-color btn-rounded float-left">
-                <a href="/Chanels/ImageUpload/@Model.Id">Change Image</a>
+                <a asp-controller="Chanels" asp-action="ImageUpload" asp-route-id="@Model.Id">Change Image</a>
             </div>
             <br />
             <br />
@@ -30,7 +30,7 @@
                     </div>
                     <div class="d-flex justify-content-center">
                         <div class="btn btn-mdb-color btn-rounded float-left">
-                            <a href="/Chanels/ImageUpload/@Model.Id">Image Upload</a>
+                            <a asp-controller="Chanels" asp-action="ImageUpload" asp-route-id="@Model.Id">Image Upload</a>
                         </div>
                     </div>
                 </div>
@@ -49,10 +49,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a href="/Chanels/Description/@Model.Description">Description</a>
+                            <a asp-controller="Chanels" asp-action="Description" asp-route-id="@Model.Description">Description</a>
                         </li>
                         <li class="nav-item">
-                            <a href="/Chanels/Videos/@Model.Id">Videos</a>
+                            <a asp-controller="Chanels" asp-action="Videos" asp-route-id="@Model.Id">Videos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Videos" asp-action="Create">AddVideo</a>
