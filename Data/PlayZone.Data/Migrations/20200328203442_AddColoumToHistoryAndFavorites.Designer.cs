@@ -10,8 +10,8 @@ using PlayZone.Data;
 namespace PlayZone.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200323184929_ImageChanges")]
-    partial class ImageChanges
+    [Migration("20200328203442_AddColoumToHistoryAndFavorites")]
+    partial class AddColoumToHistoryAndFavorites
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -295,6 +295,9 @@ namespace PlayZone.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -355,6 +358,38 @@ namespace PlayZone.Data.Migrations
                     b.HasIndex("VideoId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("PlayZone.Data.Models.FavoriteVideo", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("VideoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("UserId", "VideoId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("VideoId");
+
+                    b.ToTable("FavoriteVideos");
                 });
 
             modelBuilder.Entity("PlayZone.Data.Models.Image", b =>
@@ -431,6 +466,7 @@ namespace PlayZone.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ChanelId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedOn")
@@ -470,6 +506,38 @@ namespace PlayZone.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Videos");
+                });
+
+            modelBuilder.Entity("PlayZone.Data.Models.VideoHistory", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("VideoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("UserId", "VideoId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("VideoId");
+
+                    b.ToTable("VideoHistories");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -541,6 +609,21 @@ namespace PlayZone.Data.Migrations
                         .HasForeignKey("VideoId");
                 });
 
+            modelBuilder.Entity("PlayZone.Data.Models.FavoriteVideo", b =>
+                {
+                    b.HasOne("PlayZone.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("PlayZone.Data.Models.Video", "Video")
+                        .WithMany()
+                        .HasForeignKey("VideoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("PlayZone.Data.Models.Image", b =>
                 {
                     b.HasOne("PlayZone.Data.Models.Chanel", "Chanel")
@@ -560,11 +643,28 @@ namespace PlayZone.Data.Migrations
 
                     b.HasOne("PlayZone.Data.Models.Chanel", "Chanel")
                         .WithMany("Videos")
-                        .HasForeignKey("ChanelId");
+                        .HasForeignKey("ChanelId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("PlayZone.Data.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("PlayZone.Data.Models.VideoHistory", b =>
+                {
+                    b.HasOne("PlayZone.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("PlayZone.Data.Models.Video", "Video")
+                        .WithMany()
+                        .HasForeignKey("VideoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

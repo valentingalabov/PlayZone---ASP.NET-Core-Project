@@ -12,6 +12,7 @@
         {
             this.Id = Guid.NewGuid().ToString();
             this.Comments = new HashSet<Comment>();
+            this.VideoHistories = new HashSet<VideoHistory>();
         }
 
         [Required]
@@ -36,5 +37,7 @@
         public virtual ApplicationUser User { get; set; }
 
         public virtual IEnumerable<Comment> Comments { get; set; }
+
+        public virtual IEnumerable<VideoHistory> VideoHistories { get; set; }
     }
 }

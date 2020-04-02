@@ -7,15 +7,16 @@
     using PlayZone.Data.Common.Repositories;
     using PlayZone.Data.Models;
     using PlayZone.Services.Mapping;
-    using PlayZone.Web.ViewModels.Videos;
 
     public class VideosService : IVideosService
     {
         private readonly IDeletableEntityRepository<Video> videosRepository;
+        private readonly IDeletableEntityRepository<VideoHistory> videoHistoryRepository;
 
-        public VideosService(IDeletableEntityRepository<Video> videosRepository)
+        public VideosService(IDeletableEntityRepository<Video> videosRepository, IDeletableEntityRepository<VideoHistory> videoHistoryRepository)
         {
             this.videosRepository = videosRepository;
+            this.videoHistoryRepository = videoHistoryRepository;
         }
 
         public async Task<string> CreateVideoAsync(string title, string url, string description, int categoryId, string userId, string chanelId)

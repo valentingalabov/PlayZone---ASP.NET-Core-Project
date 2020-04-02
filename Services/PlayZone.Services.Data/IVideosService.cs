@@ -12,6 +12,5 @@
         T GetVideoById<T>(string id);
 
         bool IsValidVideo(string title, string url);
-
     }
 }

@@ -10,8 +10,7 @@
     public class VideoCreateInputModel : IMapFrom<Video>
     {
         [Required(ErrorMessage = "Url is Required!")]
-        [MinLength(VideosAndChanelsModelValidation.MinLenght, ErrorMessage = VideosAndChanelsModelValidation.UrlLenghtErrorMessage)]
-        [MaxLength(VideosAndChanelsModelValidation.MaxLenght, ErrorMessage = VideosAndChanelsModelValidation.UrlLenghtErrorMessage)]
+        [RegularExpression(@"^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$", ErrorMessage = "Invalid Url!")] 
         public string Url { get; set; }
 
         [Required(ErrorMessage = "Title is Required")]

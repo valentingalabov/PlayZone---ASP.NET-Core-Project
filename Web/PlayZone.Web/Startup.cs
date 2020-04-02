@@ -69,6 +69,7 @@
             services.AddScoped<IVideosService, VideosService>();
             services.AddScoped<ICategoriesService, CategoriesService>();
             services.AddScoped<IChanelsService, ChanelsService>();
+            services.AddScoped<ILibrariesService, LibrariesService>();
 
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();

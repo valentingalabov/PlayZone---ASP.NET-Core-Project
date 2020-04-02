@@ -2,7 +2,7 @@
 
 namespace PlayZone.Data.Migrations
 {
-    public partial class ImageChanges : Migration
+    public partial class AddMappingList : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

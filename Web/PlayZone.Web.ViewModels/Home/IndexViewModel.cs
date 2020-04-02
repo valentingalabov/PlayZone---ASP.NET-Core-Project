@@ -4,6 +4,6 @@
 
     public class IndexViewModel
     {
-        public IEnumerable<IndexVideosViewModel> Videos { get; set; }
+        public IEnumerable<IndexVideoViewModel> Videos { get; set; }
     }
 }

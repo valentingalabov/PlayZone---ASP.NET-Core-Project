@@ -2,25 +2,27 @@
 @{
     ViewData["Title"] = "Details";
 }
-<div class="">
+<div class="text-center">
     <h1>@Model.Title</h1>
 </div>
+<hr />
 <div class="embed-responsive embed-responsive-16by9">
-    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/@Model.Url?autoplay=1" frameborder="0" 
+    <iframe class="embed-responsive-item" src="@Model.EmbedVideoUrl" frameborder="0" 
             allow="accelerometer; autoplay=1; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 <br />
 <br />
 <div class="row">
     <div class="col-md-5">
-        <a href="/Chanels/Details/@Model.ChanelId"><img src="http://res.cloudinary.com/dqh6dvohu/image/upload/w_100,c_fill,ar_1:1,g_auto,r_max,bo_2px_solid_blue,b_rgb:ffffff/@Model.ChanelImageUrl" /></a>
+        <a asp-controller="Chanels" asp-action="Details" asp-route-id="@Model.ChanelId"><img src="@Model.EmbedChanelImageUrl" /></a>
     </div>
     <div class="col-md-7 float-left">
         <p class="card-text">
-            Chanel: <a href="/Chanels/Details/@Model.ChanelId">@Model.ChanelTitle</a>
+            Chanel: <a asp-controller="Chanels" asp-action="Details" asp-route-id="@Model.ChanelId">@Model.ChanelTitle</a>
         </p>
     </div>
 </div>
+<br />
 <h5>Descaription:</h5>
 <hr />
 <p>@Model.Description</p>

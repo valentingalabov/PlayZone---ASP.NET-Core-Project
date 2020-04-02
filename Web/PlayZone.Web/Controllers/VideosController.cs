@@ -12,14 +12,20 @@
     public class VideosController : BaseController
     {
         private readonly ICategoriesService categoriesService;
-        private readonly UserManager<ApplicationUser> userManager;
         private readonly IVideosService videosService;
+        private readonly ILibrariesService librariesService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public VideosController(ICategoriesService categoriesService, UserManager<ApplicationUser> userManager, IVideosService videosService)
+        public VideosController(
+                                ICategoriesService categoriesService,
+                                IVideosService videosService,
+                                ILibrariesService librariesService,
+                                UserManager<ApplicationUser> userManager)
         {
             this.categoriesService = categoriesService;
-            this.userManager = userManager;
             this.videosService = videosService;
+            this.librariesService = librariesService;
+            this.userManager = userManager;
         }
 
         [HttpGet]
@@ -60,9 +66,16 @@
             return this.RedirectToAction("Details", new { Id = videoId });
         }
 
-        public IActionResult Details(string id)
+        public async Task<IActionResult> Details(string id)
         {
             var videoViewModel = this.videosService.GetVideoById<VideoDetailsViewModel>(id);
+
+            var userId = this.userManager.GetUserId(this.User);
+
+            if (userId != null)
+            {
+                await this.librariesService.AddVideoToHistoryAsync(id, userId);
+            }
 
             if (videoViewModel == null)
             {
@@ -71,5 +84,6 @@
 
             return this.View(videoViewModel);
         }
+
     }
 }

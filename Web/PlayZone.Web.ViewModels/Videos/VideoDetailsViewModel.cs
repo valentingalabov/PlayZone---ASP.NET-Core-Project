@@ -21,6 +21,10 @@
 
         public string ChanelImageUrl { get; set; }
 
+        public string EmbedVideoUrl => $"https://www.youtube.com/embed/{this.Url}?autoplay=1";
+
+        public string EmbedChanelImageUrl => $"http://res.cloudinary.com/dqh6dvohu/image/upload/w_100,c_fill,ar_1:1,g_auto,r_max,bo_2px_solid_blue,b_rgb:ffffff/{this.ChanelImageUrl}";
+
         public DateTime CreatedOn { get; set; }
     }
 }

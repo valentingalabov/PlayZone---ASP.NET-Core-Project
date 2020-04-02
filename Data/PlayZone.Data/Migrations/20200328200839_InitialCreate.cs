@@ -206,6 +206,7 @@ namespace PlayZone.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
+                    ImageId = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
@@ -259,7 +260,7 @@ namespace PlayZone.Data.Migrations
                     Description = table.Column<string>(nullable: true),
                     CategoryId = table.Column<int>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
-                    ChanelId = table.Column<string>(nullable: true)
+                    ChanelId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -309,6 +310,54 @@ namespace PlayZone.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Comments_Videos_VideoId",
+                        column: x => x.VideoId,
+                        principalTable: "Videos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FavoriteVideos",
+                columns: table => new
+                {
+                    VideoId = table.Column<string>(nullable: false),
+                    UserId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FavoriteVideos", x => new { x.UserId, x.VideoId });
+                    table.ForeignKey(
+                        name: "FK_FavoriteVideos_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_FavoriteVideos_Videos_VideoId",
+                        column: x => x.VideoId,
+                        principalTable: "Videos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VideoHistories",
+                columns: table => new
+                {
+                    VideoId = table.Column<string>(nullable: false),
+                    UserId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VideoHistories", x => new { x.UserId, x.VideoId });
+                    table.ForeignKey(
+                        name: "FK_VideoHistories_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_VideoHistories_Videos_VideoId",
                         column: x => x.VideoId,
                         principalTable: "Videos",
                         principalColumn: "Id",
@@ -397,6 +446,11 @@ namespace PlayZone.Data.Migrations
                 column: "VideoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FavoriteVideos_VideoId",
+                table: "FavoriteVideos",
+                column: "VideoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Images_IsDeleted",
                 table: "Images",
                 column: "IsDeleted");
@@ -405,6 +459,11 @@ namespace PlayZone.Data.Migrations
                 name: "IX_Settings_IsDeleted",
                 table: "Settings",
                 column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VideoHistories_VideoId",
+                table: "VideoHistories",
+                column: "VideoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Videos_CategoryId",
@@ -448,10 +507,16 @@ namespace PlayZone.Data.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
+                name: "FavoriteVideos");
+
+            migrationBuilder.DropTable(
                 name: "Images");
 
             migrationBuilder.DropTable(
                 name: "Settings");
+
+            migrationBuilder.DropTable(
+                name: "VideoHistories");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

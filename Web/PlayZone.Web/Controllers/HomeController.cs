@@ -21,7 +21,7 @@
         {
             var viewModel = new IndexViewModel
             {
-                Videos = this.videosService.GetAllVieos<IndexVideosViewModel>(),
+                Videos = this.videosService.GetAllVieos<IndexVideoViewModel>(),
             };
 
             return this.View(viewModel);

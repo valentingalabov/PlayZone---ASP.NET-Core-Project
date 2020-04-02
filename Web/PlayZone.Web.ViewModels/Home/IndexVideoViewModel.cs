@@ -5,7 +5,7 @@
     using PlayZone.Data.Models;
     using PlayZone.Services.Mapping;
 
-    public class IndexVideosViewModel : IMapFrom<Video>
+    public class IndexVideoViewModel : IMapFrom<Video>
     {
         public string Id { get; set; }
 

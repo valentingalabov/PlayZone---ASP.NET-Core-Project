@@ -35,6 +35,10 @@
 
         public DbSet<Image> Images { get; set; }
 
+        public DbSet<FavoriteVideo> FavoriteVideos { get; set; }
+
+        public DbSet<VideoHistory> VideoHistories { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
