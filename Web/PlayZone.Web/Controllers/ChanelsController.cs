@@ -118,13 +118,11 @@
 
             var viewModel = new AllVideosByChanelViewModel
             {
-
                 Videos = this.chanelsService.GetAllVieos<VideoByChanelViewModel>(id),
                 Chanel = chanel,
             };
 
             return this.View(viewModel);
         }
-
     }
 }

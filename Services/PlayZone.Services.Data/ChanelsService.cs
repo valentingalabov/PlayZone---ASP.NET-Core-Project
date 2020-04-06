@@ -12,7 +12,6 @@
     using PlayZone.Data.Models;
     using PlayZone.Services.Mapping;
 
-
     public class ChanelsService : IChanelsService
     {
         private readonly IDeletableEntityRepository<Chanel> chanelRepository;
@@ -119,18 +118,6 @@
 
             await this.imageRepository.SaveChangesAsync();
         }
-
-        //public string GetChanelDescription(string id)
-        //{
-        //    var chanel = this.chanelRepository.All().Where(c => c.Id == id).FirstOrDefault();
-
-        //    if (chanel != null)
-        //    {
-        //        return chanel.Description;
-        //    }
-
-        //    return null;
-        //}
 
         public IEnumerable<T> GetAllVieos<T>(string id)
         {

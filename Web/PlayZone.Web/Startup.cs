@@ -51,6 +51,12 @@
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             });
+
+            services.AddAntiforgery(options =>
+            {
+                options.HeaderName = "X-CSRF-TOKEN";
+            });
+
             services.AddRazorPages();
 
             Account account = new Account(
@@ -65,16 +71,17 @@
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-            services.AddScoped<IDbQueryRunner, DbQueryRunner>();
-            services.AddScoped<IVideosService, VideosService>();
-            services.AddScoped<ICategoriesService, CategoriesService>();
-            services.AddScoped<IChanelsService, ChanelsService>();
-            services.AddScoped<ILibrariesService, LibrariesService>();
 
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddSingleton(cloudinary);
+            services.AddScoped<IDbQueryRunner, DbQueryRunner>();
+            services.AddScoped<IVideosService, VideosService>();
+            services.AddScoped<ICategoriesService, CategoriesService>();
+            services.AddScoped<IChanelsService, ChanelsService>();
+            services.AddScoped<ILibrariesService, LibrariesService>();
+            services.AddScoped<IVotesService, VotesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

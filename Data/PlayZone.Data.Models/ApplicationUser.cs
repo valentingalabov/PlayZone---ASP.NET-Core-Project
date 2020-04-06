@@ -16,6 +16,7 @@ namespace PlayZone.Data.Models
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
             this.VideoHistories = new HashSet<VideoHistory>();
+            this.FavoritesVideos = new HashSet<FavoriteVideo>();
         }
 
         // Audit info
@@ -39,5 +40,7 @@ namespace PlayZone.Data.Models
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
 
         public virtual ICollection<VideoHistory> VideoHistories { get; set; }
+
+        public virtual ICollection<FavoriteVideo> FavoritesVideos { get; set; }
     }
 }

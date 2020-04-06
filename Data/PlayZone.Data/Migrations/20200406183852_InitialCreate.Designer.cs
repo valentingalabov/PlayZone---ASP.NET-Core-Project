@@ -10,7 +10,7 @@ using PlayZone.Data;
 namespace PlayZone.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200328200839_InitialCreate")]
+    [Migration("20200406183852_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -368,7 +368,24 @@ namespace PlayZone.Data.Migrations
                     b.Property<string>("VideoId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("UserId", "VideoId");
+
+                    b.HasIndex("IsDeleted");
 
                     b.HasIndex("VideoId");
 
@@ -476,6 +493,7 @@ namespace PlayZone.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -499,11 +517,60 @@ namespace PlayZone.Data.Migrations
                     b.Property<string>("VideoId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("UserId", "VideoId");
+
+                    b.HasIndex("IsDeleted");
 
                     b.HasIndex("VideoId");
 
                     b.ToTable("VideoHistories");
+                });
+
+            modelBuilder.Entity("PlayZone.Data.Models.Vote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("VideoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("VideoId");
+
+                    b.ToTable("Votes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -578,13 +645,13 @@ namespace PlayZone.Data.Migrations
             modelBuilder.Entity("PlayZone.Data.Models.FavoriteVideo", b =>
                 {
                     b.HasOne("PlayZone.Data.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("FavoritesVideos")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("PlayZone.Data.Models.Video", "Video")
-                        .WithMany()
+                        .WithMany("FavoriteVideos")
                         .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -615,10 +682,27 @@ namespace PlayZone.Data.Migrations
 
                     b.HasOne("PlayZone.Data.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PlayZone.Data.Models.VideoHistory", b =>
+                {
+                    b.HasOne("PlayZone.Data.Models.ApplicationUser", "User")
+                        .WithMany("VideoHistories")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("PlayZone.Data.Models.Video", "Video")
+                        .WithMany("VideoHistories")
+                        .HasForeignKey("VideoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PlayZone.Data.Models.Vote", b =>
                 {
                     b.HasOne("PlayZone.Data.Models.ApplicationUser", "User")
                         .WithMany()
@@ -627,10 +711,8 @@ namespace PlayZone.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("PlayZone.Data.Models.Video", "Video")
-                        .WithMany()
-                        .HasForeignKey("VideoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .WithMany("Votes")
+                        .HasForeignKey("VideoId");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,12 +1,16 @@
 ﻿namespace PlayZone.Web.ViewModels.Videos
 {
     using System;
+    using System.Linq;
 
+    using AutoMapper;
     using PlayZone.Data.Models;
     using PlayZone.Services.Mapping;
 
-    public class VideoDetailsViewModel : IMapFrom<Video>
+    public class VideoDetailsViewModel : IMapFrom<Video>, IHaveCustomMappings
     {
+        public string Id { get; set; }
+
         public string Url { get; set; }
 
         public string Title { get; set; }
@@ -26,5 +30,16 @@
         public string EmbedChanelImageUrl => $"http://res.cloudinary.com/dqh6dvohu/image/upload/w_100,c_fill,ar_1:1,g_auto,r_max,bo_2px_solid_blue,b_rgb:ffffff/{this.ChanelImageUrl}";
 
         public DateTime CreatedOn { get; set; }
+
+        public int VotesCount { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<Video, VideoDetailsViewModel>()
+                .ForMember(x => x.VotesCount, options =>
+                {
+                    options.MapFrom(v => v.Votes.Sum(vt => (int)vt.Type));
+                });
+        }
     }
 }

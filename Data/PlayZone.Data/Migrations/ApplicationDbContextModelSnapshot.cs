@@ -491,6 +491,7 @@ namespace PlayZone.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -536,6 +537,38 @@ namespace PlayZone.Data.Migrations
                     b.HasIndex("VideoId");
 
                     b.ToTable("VideoHistories");
+                });
+
+            modelBuilder.Entity("PlayZone.Data.Models.Vote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("VideoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("VideoId");
+
+                    b.ToTable("Votes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -610,13 +643,13 @@ namespace PlayZone.Data.Migrations
             modelBuilder.Entity("PlayZone.Data.Models.FavoriteVideo", b =>
                 {
                     b.HasOne("PlayZone.Data.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("FavoritesVideos")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("PlayZone.Data.Models.Video", "Video")
-                        .WithMany()
+                        .WithMany("FavoriteVideos")
                         .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -647,7 +680,9 @@ namespace PlayZone.Data.Migrations
 
                     b.HasOne("PlayZone.Data.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PlayZone.Data.Models.VideoHistory", b =>
@@ -663,6 +698,19 @@ namespace PlayZone.Data.Migrations
                         .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("PlayZone.Data.Models.Vote", b =>
+                {
+                    b.HasOne("PlayZone.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("PlayZone.Data.Models.Video", "Video")
+                        .WithMany("Votes")
+                        .HasForeignKey("VideoId");
                 });
 #pragma warning restore 612, 618
         }

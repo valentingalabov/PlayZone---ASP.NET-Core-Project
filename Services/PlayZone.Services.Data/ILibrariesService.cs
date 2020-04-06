@@ -10,5 +10,9 @@
         IEnumerable<T> GetVideosHistoryByUser<T>(string userId);
 
         Task DeleteFromLibrary(string videoId);
+
+        Task AddVideoToFavoriteAsync(string videoId, string userId);
+
+        IEnumerable<T> GetFavoriteVideosByUser<T>(string userId);
     }
 }

@@ -18,9 +18,6 @@
 
         Task CreateImage(string url, string cloudinaryPublicId, Chanel currentChanel);
 
-        //string GetChanelDescription(string id);
-
         IEnumerable<T> GetAllVieos<T>(string id);
-
     }
 }

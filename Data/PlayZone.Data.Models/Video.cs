@@ -13,6 +13,8 @@
             this.Id = Guid.NewGuid().ToString();
             this.Comments = new HashSet<Comment>();
             this.VideoHistories = new HashSet<VideoHistory>();
+            this.FavoriteVideos = new HashSet<FavoriteVideo>();
+            this.Votes = new HashSet<Vote>();
         }
 
         [Required]
@@ -27,6 +29,7 @@
 
         public virtual Category Category { get; set; }
 
+        [Required]
         public string UserId { get; set; }
 
         [Required]
@@ -39,5 +42,9 @@
         public virtual IEnumerable<Comment> Comments { get; set; }
 
         public virtual IEnumerable<VideoHistory> VideoHistories { get; set; }
+
+        public virtual IEnumerable<FavoriteVideo> FavoriteVideos { get; set; }
+
+        public virtual IEnumerable<Vote> Votes { get; set; }
     }
 }

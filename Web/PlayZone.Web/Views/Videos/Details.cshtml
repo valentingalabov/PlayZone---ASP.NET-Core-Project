@@ -7,22 +7,68 @@
 </div>
 <hr />
 <div class="embed-responsive embed-responsive-16by9">
-    <iframe class="embed-responsive-item" src="@Model.EmbedVideoUrl" frameborder="0" 
+    <iframe class="embed-responsive-item" src="@Model.EmbedVideoUrl" frameborder="0"
             allow="accelerometer; autoplay=1; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 <br />
 <br />
 <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-1">
         <a asp-controller="Chanels" asp-action="Details" asp-route-id="@Model.ChanelId"><img src="@Model.EmbedChanelImageUrl" /></a>
     </div>
-    <div class="col-md-7 float-left">
+    <div class="col-md-2 float-left">
         <p class="card-text">
             Chanel: <a asp-controller="Chanels" asp-action="Details" asp-route-id="@Model.ChanelId">@Model.ChanelTitle</a>
         </p>
     </div>
+
+    <div class="col-md-4">
+        <form id="votesForm" method="post"></form>
+        <div>
+            <a href="#" onclick="sendVote(@Model.Id, true)">
+                <i class="fa fa-thumbs-up"></i>
+            </a>
+        </div>
+        <div id="votesCount">@Model.VotesCount</div>
+        <div>
+            <a href="#" onclick="sendVote(@Model.Id, false)">
+                <i class="fa fa-thumbs-down"></i>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <a asp-controller="Libraries" asp-action="AddVideoToFavorites" asp-route-id="@Model.Id">
+            <svg class="bi bi-heart-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" clip-rule="evenodd" />
+            </svg>
+        </a>
+    </div>
+
+
 </div>
 <br />
 <h5>Descaription:</h5>
 <hr />
 <p>@Model.Description</p>
+
+
+@section Scripts {
+    <script>
+        function sendVote(videoId, isUpVote) {
+            var token = $("#votesForm input[name=__RequestVerificationToken]").val();
+            var json = { videoId: videoId, isUpVote: isUpVote };
+            $.ajax({
+                url: "/api/votes",
+                type: "POST",
+                data: JSON.stringify(json),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                headers: { 'X-CSRF-TOKEN': token },
+                success: function (data) {
+                    $("#votesCount").html(data.votesCount);
+                }
+
+            });
+        }
+    </script>
+}

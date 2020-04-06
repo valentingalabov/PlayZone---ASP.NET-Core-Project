@@ -23,7 +23,6 @@
                 UserId = user.Id,
                 Description = "This is Chanel with Enduro Content!",
                 Videos = videos,
-
             };
 
             await dbContext.Chanels.AddAsync(chanel);

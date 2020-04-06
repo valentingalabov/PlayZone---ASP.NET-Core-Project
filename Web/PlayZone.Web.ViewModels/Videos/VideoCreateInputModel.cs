@@ -10,7 +10,7 @@
     public class VideoCreateInputModel : IMapFrom<Video>
     {
         [Required(ErrorMessage = "Url is Required!")]
-        [RegularExpression(@"^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$", ErrorMessage = "Invalid Url!")] 
+        [RegularExpression(@"^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$", ErrorMessage = "Invalid Url!")]
         public string Url { get; set; }
 
         [Required(ErrorMessage = "Title is Required")]

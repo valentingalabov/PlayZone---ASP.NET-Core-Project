@@ -84,6 +84,5 @@
 
             return this.View(videoViewModel);
         }
-
     }
 }
