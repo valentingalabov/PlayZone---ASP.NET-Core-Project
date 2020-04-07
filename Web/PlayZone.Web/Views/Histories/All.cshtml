@@ -1,4 +1,4 @@
-﻿@model PlayZone.Web.ViewModels.Libraries.History.HistoryLibraryViewModel
+﻿@model PlayZone.Web.ViewModels.Histories.HistoryLibraryViewModel
 @{
     ViewData["Title"] = "History";
 }
@@ -25,7 +25,7 @@
             <p>@video.ShortDescription</p>
         </div>
         <div class="col-md-1">
-            <a class="text-dark" asp-controller="Libraries" asp-action="DeleteFromHistory" asp-route-id="@video.VideoId">
+            <a class="text-dark" asp-controller="Histories" asp-action="DeleteFromHistory" asp-route-id="@video.VideoId">
                 <span  class="btn btn-lg">&times;</span>
                 
             </a>

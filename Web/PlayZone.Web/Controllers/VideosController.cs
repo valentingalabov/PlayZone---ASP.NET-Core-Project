@@ -13,18 +13,18 @@
     {
         private readonly ICategoriesService categoriesService;
         private readonly IVideosService videosService;
-        private readonly ILibrariesService librariesService;
+        private readonly IHistoriesService historiesService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public VideosController(
                                 ICategoriesService categoriesService,
                                 IVideosService videosService,
-                                ILibrariesService librariesService,
+                                IHistoriesService historiesService,
                                 UserManager<ApplicationUser> userManager)
         {
             this.categoriesService = categoriesService;
             this.videosService = videosService;
-            this.librariesService = librariesService;
+            this.historiesService = historiesService;
             this.userManager = userManager;
         }
 
@@ -74,7 +74,7 @@
 
             if (userId != null)
             {
-                await this.librariesService.AddVideoToHistoryAsync(id, userId);
+                await this.historiesService.AddVideoToHistoryAsync(id, userId);
             }
 
             if (videoViewModel == null)

@@ -1,4 +1,4 @@
-﻿namespace PlayZone.Web.ViewModels.Libraries.Favorite
+﻿namespace PlayZone.Web.ViewModels.Favorites
 {
     using System.Collections.Generic;
 

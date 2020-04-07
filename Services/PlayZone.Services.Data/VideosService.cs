@@ -11,12 +11,10 @@
     public class VideosService : IVideosService
     {
         private readonly IDeletableEntityRepository<Video> videosRepository;
-        private readonly IDeletableEntityRepository<VideoHistory> videoHistoryRepository;
 
-        public VideosService(IDeletableEntityRepository<Video> videosRepository, IDeletableEntityRepository<VideoHistory> videoHistoryRepository)
+        public VideosService(IDeletableEntityRepository<Video> videosRepository)
         {
             this.videosRepository = videosRepository;
-            this.videoHistoryRepository = videoHistoryRepository;
         }
 
         public async Task<string> CreateVideoAsync(string title, string url, string description, int categoryId, string userId, string chanelId)

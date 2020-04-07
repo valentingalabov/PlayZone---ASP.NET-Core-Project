@@ -77,11 +77,12 @@
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddSingleton(cloudinary);
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
-            services.AddScoped<IVideosService, VideosService>();
-            services.AddScoped<ICategoriesService, CategoriesService>();
-            services.AddScoped<IChanelsService, ChanelsService>();
-            services.AddScoped<ILibrariesService, LibrariesService>();
-            services.AddScoped<IVotesService, VotesService>();
+            services.AddTransient<IVideosService, VideosService>();
+            services.AddTransient<ICategoriesService, CategoriesService>();
+            services.AddTransient<IChanelsService, ChanelsService>();
+            services.AddTransient<IHistoriesService, HistoriesService>();
+            services.AddTransient<IFavoritesServices, FavoritesService>();
+            services.AddTransient<IVotesService, VotesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

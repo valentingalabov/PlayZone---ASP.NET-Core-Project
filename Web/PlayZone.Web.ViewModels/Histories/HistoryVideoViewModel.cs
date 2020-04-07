@@ -1,11 +1,11 @@
-﻿namespace PlayZone.Web.ViewModels.Libraries.Favorite
+﻿namespace PlayZone.Web.ViewModels.Histories
 {
     using System;
 
     using PlayZone.Data.Models;
     using PlayZone.Services.Mapping;
 
-    public class FavoriteVideoViewModel : IMapFrom<FavoriteVideo>
+    public class HistoryVideoViewModel : IMapFrom<VideoHistory>
     {
         public string VideoId { get; set; }
 

@@ -1,4 +1,4 @@
-﻿namespace PlayZone.Web.ViewModels.Libraries.History
+﻿namespace PlayZone.Web.ViewModels.Histories
 {
     using System.Collections.Generic;
 

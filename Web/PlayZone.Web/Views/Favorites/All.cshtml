@@ -1,0 +1,67 @@
+﻿@model PlayZone.Web.ViewModels.Favorites.FavoriteLibraryViewModel
+@{
+    ViewData["Title"] = "Favorites";
+}
+
+<h1>Favorites</h1>
+
+@foreach (var video in Model.Videos)
+{
+<div class="row">
+    <div class="col-md-4">
+        <a asp-controller="Videos" asp-action="Details" asp-route-id="@video.VideoId">
+            <img class="card-img" src="@video.VideoImageUrl" alt="Card image cap">
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a class="text-dark" asp-controller="Videos" asp-action="Details" asp-route-id="@video.VideoId">
+            <h5>@video.VideoTitle</h5>
+        </a>
+        <a class="text-dark" asp-controller="Chanels" asp-action="Details" asp-route-id="@video.VideoChanelId">
+            <p>Chanel: @video.VideoChanelTitle</p>
+        </a>
+        <br />
+        <p>@video.ShortDescription</p>
+    </div>
+    <div class="col-md-4">
+        @*<a class="text-dark" asp-controller="Libraries" asp-action="DeleteFromFavorites" asp-route-id="@video.VideoId">
+                <span class="btn btn-lg">&times;</span>
+            </a>*@
+        <form method="post" asp-controller="Favorites" asp-action="DeleteFromFavorites" asp-route-id="@video.VideoId">
+         
+            <span id="confirmDeleteSpan_@video.VideoId" style="display:none">
+                <span>Are you sure you want to delete video from your Favorite list?</span>
+                <button type="submit" class="btn btn-danger">Yes</button>
+                <a href="#" class="btn btn-primary"
+                   onclick="confirmDelete('@video.VideoId', false)">No</a>
+            </span>
+
+            <span id="deleteSpan_@video.VideoId">
+                <a href="#" class="btn btn-danger"
+                   onclick="confirmDelete('@video.VideoId', true)">Delete</a>
+            </span>
+        </form>
+    </div>
+</div>
+
+    <hr />
+}
+
+@section Scripts {
+    <script>
+        function confirmDelete(uniqueId, isDeleteClicked) {
+            var deleteSpan = 'deleteSpan_' + uniqueId;
+            var confirmDeleteSpan = 'confirmDeleteSpan_' + uniqueId;
+
+            if (isDeleteClicked) {
+                $('#' + deleteSpan).hide();
+                $('#' + confirmDeleteSpan).show();
+            } else {
+                $('#' + deleteSpan).show();
+                $('#' + confirmDeleteSpan).hide();
+            }
+        }
+    </script>
+
+
+}

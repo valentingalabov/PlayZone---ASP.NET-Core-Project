@@ -3,16 +3,12 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public interface ILibrariesService
+    public interface IHistoriesService
     {
         Task AddVideoToHistoryAsync(string videoId, string userId);
 
         IEnumerable<T> GetVideosHistoryByUser<T>(string userId);
 
-        Task DeleteFromLibrary(string videoId);
-
-        Task AddVideoToFavoriteAsync(string videoId, string userId);
-
-        IEnumerable<T> GetFavoriteVideosByUser<T>(string userId);
+        Task DeleteFromHistoryAsync(string videoId, string userId);
     }
 }
