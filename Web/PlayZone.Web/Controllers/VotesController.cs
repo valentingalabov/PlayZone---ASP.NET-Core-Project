@@ -28,8 +28,14 @@
         {
             var userId = this.userManager.GetUserId(this.User);
             await this.votesService.VoteAsync(input.VideoId, userId, input.IsUpVote);
-            var votes = this.votesService.GetVotes(input.VideoId);
-            return new VoteResponseModel { VotesCount = votes };
-        }
+
+            var viewModel = new VoteResponseModel
+            {
+                UpVotesCount = this.votesService.GetUpVotes(input.VideoId),
+                DownVotesCount = this.votesService.GetDownVotes(input.VideoId),
+            };
+
+            return viewModel;
+    }
     }
 }

@@ -25,20 +25,28 @@
 
         public string ChanelImageUrl { get; set; }
 
-        public string EmbedVideoUrl => $"https://www.youtube.com/embed/{this.Url}?autoplay=1";
+        public string EmbedVideoUrl => $"https://www.youtube.com/embed/{this.Url}";
 
-        public string EmbedChanelImageUrl => $"http://res.cloudinary.com/dqh6dvohu/image/upload/w_100,c_fill,ar_1:1,g_auto,r_max,bo_2px_solid_blue,b_rgb:ffffff/{this.ChanelImageUrl}";
+        public string EmbedChanelImageUrl => $"https://res.cloudinary.com/dqh6dvohu/image/upload/w_100,c_fill,ar_1:1,g_auto,r_max,bo_2px_solid_blue,b_rgb:ffffff/{this.ChanelImageUrl}";
 
         public DateTime CreatedOn { get; set; }
 
-        public int VotesCount { get; set; }
+        public int UpVotesCount { get; set; }
+
+        public int DownVotesCount { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Video, VideoDetailsViewModel>()
-                .ForMember(x => x.VotesCount, options =>
+                .ForMember(x => x.UpVotesCount, options =>
                 {
-                    options.MapFrom(v => v.Votes.Sum(vt => (int)vt.Type));
+                    options.MapFrom(v => v.Votes.Where(v => (int)v.Type == 1).Sum(vt => (int)vt.Type));
+                });
+
+            configuration.CreateMap<Video, VideoDetailsViewModel>()
+                .ForMember(x => x.DownVotesCount, options =>
+                {
+                    options.MapFrom(v => v.Votes.Where(v => (int)v.Type == -1).Sum(vt => (int)vt.Type) * -1);
                 });
         }
     }

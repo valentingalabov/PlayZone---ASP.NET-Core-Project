@@ -25,7 +25,7 @@
 
         public string EmbedChanelImageUrl => $"http://res.cloudinary.com/dqh6dvohu/image/upload/w_50,c_fill,ar_1:1,g_auto,r_max,bo_2px_solid_blue,b_rgb:ffffff/{this.ChanelImageUrl}";
 
-        public string EmbedVideoImageUrl => $"http://i3.ytimg.com/vi/{this.Url}/maxresdefault.jpg";
+        public string EmbedVideoImageUrl => $"https://i3.ytimg.com/vi/{this.Url}/maxresdefault.jpg";
 
         public string AddBefore
         {

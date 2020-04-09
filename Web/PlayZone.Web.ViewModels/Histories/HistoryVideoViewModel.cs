@@ -31,6 +31,6 @@
 
         public DateTime VideoHistoryCreatedOn { get; set; }
 
-        public string VideoImageUrl => $"http://i3.ytimg.com/vi/{this.VideoUrl}/maxresdefault.jpg";
+        public string VideoImageUrl => $"https://i3.ytimg.com/vi/{this.VideoUrl}/maxresdefault.jpg";
     }
 }

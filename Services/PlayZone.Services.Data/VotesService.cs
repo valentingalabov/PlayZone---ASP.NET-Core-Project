@@ -1,5 +1,7 @@
 ﻿namespace PlayZone.Services.Data
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -15,17 +17,26 @@
             this.votesRepository = votesRepository;
         }
 
-        public int GetVotes(string videoId)
+        public int GetDownVotes(string videoId)
         {
-            var votes = this.votesRepository.All().Where(x => x.VideoId == videoId).Sum(x => (int)x.Type);
-            return votes;
+            var downVotes = this.votesRepository.All()
+               .Where(x => x.VideoId == videoId && (int)x.Type == -1).Sum(x => (int)x.Type);
+
+            return Math.Abs(downVotes);
+        }
+
+        public int GetUpVotes(string videoId)
+        {
+            var upVotes = this.votesRepository.All()
+                .Where(x => x.VideoId == videoId && (int)x.Type == 1).Sum(x => (int)x.Type);
+
+            return upVotes;
         }
 
         public async Task VoteAsync(string videoId, string userId, bool isUpVote)
         {
             var vote = this.votesRepository.All()
                 .FirstOrDefault(x => x.VideoId == videoId && x.UserId == userId);
-
             if (vote != null)
             {
                 vote.Type = isUpVote ? VoteType.UpVote : VoteType.DownVote;

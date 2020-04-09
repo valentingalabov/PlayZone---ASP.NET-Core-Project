@@ -6,6 +6,8 @@
     {
         Task VoteAsync(string videoId, string userId, bool isUpvote);
 
-        int GetVotes(string videoId);
+        int GetUpVotes(string videoId);
+
+        int GetDownVotes(string videoId);
     }
 }
