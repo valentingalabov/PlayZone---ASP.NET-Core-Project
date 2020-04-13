@@ -119,7 +119,7 @@
             await this.imageRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<T> GetAllVieos<T>(string id)
+        public IEnumerable<T> GetVieosByChanel<T>(string id)
         {
             var videos = this.videoReposiroty.All().Where(v => v.ChanelId == id);
 

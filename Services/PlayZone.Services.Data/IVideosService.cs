@@ -5,7 +5,9 @@
 
     public interface IVideosService
     {
-        IEnumerable<T> GetAllVieos<T>();
+        IEnumerable<T> GetAllVideos<T>(int? take, int skip = 0);
+
+        int GetAllVideosCount();
 
         Task<string> CreateVideoAsync(string title, string url, string description, int categoryId, string userId, string chanelId);
 

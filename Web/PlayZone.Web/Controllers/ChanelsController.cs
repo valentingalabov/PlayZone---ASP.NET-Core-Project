@@ -102,27 +102,27 @@
             return this.RedirectToAction("Details", new { Id = id });
         }
 
-        public IActionResult Description(string description)
+        public IActionResult Description(string id)
         {
+            var chanel = this.chanelsService.GetChanelById<ChanelDetailsViewModel>(id);
+
             var viewModel = new ChanelDescriptionViewModel
             {
-                Description = description,
+                Description = chanel.Description,
             };
 
-            return this.View(viewModel);
+            return this.PartialView("_ChanelDescriptionPartial", viewModel);
         }
 
         public IActionResult Videos(string id)
         {
-            var chanel = this.chanelsService.GetChanelById<ChanelViewModel>(id);
-
+            // var chanel = this.chanelsService.GetChanelById<ChanelViewModel>(id);
             var viewModel = new AllVideosByChanelViewModel
             {
-                Videos = this.chanelsService.GetAllVieos<VideoByChanelViewModel>(id),
-                Chanel = chanel,
+                Videos = this.chanelsService.GetVieosByChanel<VideoByChanelViewModel>(id),
             };
 
-            return this.View(viewModel);
+            return this.PartialView("_ChanelVideosPartial", viewModel);
         }
     }
 }

@@ -1,7 +1,8 @@
 ﻿namespace PlayZone.Web.Controllers
 {
+    using System;
     using System.Diagnostics;
-
+    using System.Linq;
     using Microsoft.AspNetCore.Mvc;
     using PlayZone.Services.Data;
     using PlayZone.Services.Mapping;
@@ -10,6 +11,8 @@
 
     public class HomeController : BaseController
     {
+        private const int ItemsPerPage = 6;
+
         private readonly IVideosService videosService;
 
         public HomeController(IVideosService videosService)
@@ -17,12 +20,18 @@
             this.videosService = videosService;
         }
 
-        public IActionResult Index()
+        //[Route("/")]
+        public IActionResult Index(int page = 1)
         {
-            var viewModel = new IndexViewModel
-            {
-                Videos = this.videosService.GetAllVieos<IndexVideoViewModel>(),
-            };
+            var viewModel = new IndexViewModel();
+
+            viewModel.AllVideos = this.videosService.GetAllVideos<IndexVideoViewModel>(ItemsPerPage, (page - 1) * ItemsPerPage);
+
+            var count = this.videosService.GetAllVideosCount();
+
+            viewModel.PagesCount = (int)Math.Ceiling((double)count / ItemsPerPage);
+
+            viewModel.CurrentPage = page;
 
             return this.View(viewModel);
         }

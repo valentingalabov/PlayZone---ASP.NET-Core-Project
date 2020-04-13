@@ -4,6 +4,10 @@
 
     public class IndexViewModel
     {
-        public IEnumerable<IndexVideoViewModel> Videos { get; set; }
+        public int PagesCount { get; set; }
+
+        public int CurrentPage { get; set; }
+
+        public IEnumerable<IndexVideoViewModel> AllVideos { get; set; }
     }
 }

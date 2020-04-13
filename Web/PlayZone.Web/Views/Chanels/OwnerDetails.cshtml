@@ -1,10 +1,4 @@
 ﻿
-@{
-    ViewData["Title"] = "OwnerDetails";
-}
-
-<h1>OwnerDetails</h1>
-
 @model PlayZone.Web.ViewModels.Chanels.ChanelDetailsViewModel
 @{
     ViewData["Title"] = "Details";
@@ -12,7 +6,7 @@
 
 <div class="text-center">
 
-    
+
 
     @if (Model.ImageUrl != null)
     {
@@ -23,7 +17,7 @@
             </div>
         </div>
         <div class="btn btn-mdb-color btn-rounded float-left">
-            <a  asp-controller="Chanels" asp-action="ImageUpload" asp-route-id="@Model.Id">Change Image</a>
+            <a asp-controller="Chanels" asp-action="ImageUpload" asp-route-id="@Model.Id">Change Image</a>
         </div>
         <br />
         <br />
@@ -53,22 +47,121 @@
 
 
 
-    <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container">
-            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a asp-controller="Chanels" asp-action="Description" asp-route-id="@Model.Id">Description</a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-controller="Chanels" asp-action="Videos" asp-route-id="@Model.Id">Videos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Videos" asp-action="Create">AddVideo</a>
-                    </li>
-                </ul>
-            </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light row">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Videos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="button1">Description</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="addVideo">Add Video</a>
+                </li>
+            </ul>
         </div>
     </nav>
 
+    <div id="div1"></div>
+    <div id="video"></div>
 </div>
+@section scripts{
+
+    <script>
+                $(document).ready(function () {
+
+                    $("#button1").click(function () {
+                        $("#div1").load("/Chanels/Description/@Model.Id");
+                    });
+
+                });
+    </script>
+
+    <script>
+                $(document).ready(function () {
+
+                    $("#addVideo").click(function () {
+                        $("#video").load("/Chanels/Videos/@Model.Id");
+                    });
+
+                });
+    </script>
+
+    @*<script>
+            function sentDescription(chanelId) {
+                var json = { chanelId: chanelId };
+                $.ajax({
+                    url: "/Chanels/Description",
+                    type: "POST",
+                    data: JSON.stringify(json),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        $("#desc").html(data.Description);
+
+                    }
+                });
+        </script>*@
+    @*<script>
+             $(document).ready(function () {
+                 $("#bindButton").click(function (e) {
+            var json = { description: description };
+            $.ajax({
+                type: "GET",
+                url: "/Chanels/Description",
+                contentType: "application/json; charset=utf-8",
+                data: '{"description":"' + $("#@Model.Description").val() + '"}',
+                dataType: "html",
+                success: function (result, status, xhr) {
+                    $("#partial").html(result)
+                },
+        </script>*@
+
+
+
+    @*<script>
+            function getDescrioption(description) {
+                var json = { description: description };
+                $.ajax({
+                    url: "/Chanels/Description",
+                    type: "GET",
+                    data: JSON.stringify(json),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        $("#description").html(data.getDescrioption);
+                    }
+                });
+        </script>
+
+        <script>
+            function getDescrioption(description) {
+                var json = { description: description };
+                $.ajax({
+                    url: "/Chanels/Description",
+                    type: "GET",
+                    data: JSON.stringify(json),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        $("#description").html(data.getDescrioption);
+                    }
+                });
+        </script>*@
+
+}
+
+@*function sentDescription(description) {
+    var json = { description: description};
+    $.ajax({
+    url: "/Chanels/description",
+    type: "GET",
+    data: JSON.stringify(json),
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function (data) {
+    $("#desc").html(data.description);
+
+    }
+    });*@

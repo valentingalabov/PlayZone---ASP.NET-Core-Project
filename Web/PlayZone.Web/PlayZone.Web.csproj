@@ -44,8 +44,4 @@
     <ProjectReference Include="..\PlayZone.Web.Infrastructure\PlayZone.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\PlayZone.Web.ViewModels\PlayZone.Web.ViewModels.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Libraries\" />
-  </ItemGroup>
 </Project>

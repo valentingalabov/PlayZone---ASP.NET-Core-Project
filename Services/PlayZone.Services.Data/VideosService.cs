@@ -40,14 +40,20 @@
 
         public T GetVideoById<T>(string id)
         {
-            var video = this.videosRepository.All().Where(v => v.Id == id).To<T>().FirstOrDefault();
+            var video = this.videosRepository.All()
+                .Where(v => v.Id == id).To<T>()
+                .FirstOrDefault();
 
             return video;
         }
 
-        public IEnumerable<T> GetAllVieos<T>()
+        public IEnumerable<T> GetAllVideos<T>(int? take, int skip = 0)
         {
-            return this.videosRepository.All().To<T>().ToList();
+            var query = this.videosRepository.All()
+                .OrderByDescending(v => v.CreatedOn)
+                .Skip(skip);
+ 
+            return query.Take(take.Value).To<T>().ToList();
         }
 
         public bool IsValidVideo(string title, string url)
@@ -58,6 +64,11 @@
             }
 
             return true;
+        }
+
+        public int GetAllVideosCount()
+        {
+            return this.videosRepository.All().Count();
         }
     }
 }
