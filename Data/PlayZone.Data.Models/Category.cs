@@ -17,6 +17,6 @@
 
         public string Description { get; set; }
 
-        public IEnumerable<Video> Videos { get; set; }
+        public virtual IEnumerable<Video> Videos { get; set; }
     }
 }

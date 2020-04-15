@@ -83,6 +83,7 @@
             services.AddTransient<IHistoriesService, HistoriesService>();
             services.AddTransient<IFavoritesServices, FavoritesService>();
             services.AddTransient<IVotesService, VotesService>();
+            services.AddTransient<ICommentsService, CommentsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

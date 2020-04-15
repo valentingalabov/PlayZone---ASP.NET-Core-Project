@@ -1,6 +1,7 @@
 ﻿namespace PlayZone.Web.ViewModels.Videos
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using AutoMapper;
@@ -34,6 +35,8 @@
         public int UpVotesCount { get; set; }
 
         public int DownVotesCount { get; set; }
+
+        public IEnumerable<VideoCommentViewModel> Comments { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {

@@ -3,9 +3,9 @@
     using System;
     using System.Diagnostics;
     using System.Linq;
+
     using Microsoft.AspNetCore.Mvc;
     using PlayZone.Services.Data;
-    using PlayZone.Services.Mapping;
     using PlayZone.Web.ViewModels;
     using PlayZone.Web.ViewModels.Home;
 
@@ -20,7 +20,7 @@
             this.videosService = videosService;
         }
 
-        //[Route("/")]
+        // [Route("/")]
         public IActionResult Index(int page = 1)
         {
             var viewModel = new IndexViewModel();

@@ -3,6 +3,55 @@
     ViewData["Title"] = "Details";
 }
 
+@*@{
+        this.ViewData["Title"] = Model.Title;
+        void DisplayComments(int? parentId)
+        {
+            var comments = this.Model.Comments.Where(x => x.ParentId == parentId);
+            if (!comments.Any())
+            {
+                return;
+            }
+
+            @foreach (var comment in comments)
+            {
+                <div class="container-fluid mt-100">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <div class="media flex-wrap w-100 align-items-center">
+                                        <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1574583246/AAA/2.jpg" class="d-block ui-w-40 rounded-circle" alt="">
+                                        <div class="media-body ml-3">
+                                            @comment.UserUserName
+                                            <div class="text-muted small">
+                                                <time datetime="@comment.CreatedOn.ToString("O")"></time>
+                                            </div>
+                                        </div>
+                                        <div class="text-muted small ml-3">
+                                            @if (this.User.Identity.IsAuthenticated)
+                                            {
+                                                <div class="px-4 pt-3"> <button type="button" class="btn btn-secondary" onclick="showAddCommentForm(@comment.Id)"><i class="fa fa-plus"></i>&nbsp; Answer</button> </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <article>
+                                        @comment.Content
+                                    </article>
+                                    @{ DisplayComments(comment.Id); }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }*@
+
+
+
 <div class="text-center">
     <h1>@Model.Title</h1>
 </div>
@@ -23,37 +72,36 @@
         </p>
     </div>
 
-    @if (this.User != null)
-    {
-        <div class="col-md-7">
-            <div class="container row">
-                <div class="border col-md-1 text-center">
-                    <form id="votesForm" method="post"></form>
-                    <div class="">
-                        <a href="#votesForm" onclick="sendVote('@Model.Id', true)">
-                            <i class="fa fa-thumbs-up"></i>
-                        </a>
-                    </div>
-                    <div class="" id="upVotesCount">@Model.UpVotesCount</div>
-                    <div class="">
-                        <a href="#votesForm" onclick="sendVote('@Model.Id', false)">
-                            <i class="fa fa-thumbs-down"></i>
-                        </a>
-                    </div>
 
-                    <div class="" id="downVotesCount">@Model.DownVotesCount</div>
+    <div class="col-md-7">
+        <div class="container row">
+            <div class="border col-md-1 text-center">
+                <form id="votesForm" method="post"></form>
+                <div class="">
+                    <a href="#votesForm" onclick="sendVote('@Model.Id', true)">
+                        <i class="fa fa-thumbs-up"></i>
+                    </a>
                 </div>
-                <div class="col-md-3 border text-center">
-                    <p>Add to Favorites:</p>
-                    <a href="#"><i class="fas fa-heart"></i></a>
+                <div class="" id="upVotesCount">@Model.UpVotesCount</div>
+                <div class="">
+                    <a href="#votesForm" onclick="sendVote('@Model.Id', false)">
+                        <i class="fa fa-thumbs-down"></i>
+                    </a>
                 </div>
 
-                <div class="col-md-3 border text-center">
-                    <p>Created On: @Model.CreatedOn.ToShortDateString()</p>
-                </div>
+                <div class="" id="downVotesCount">@Model.DownVotesCount</div>
+            </div>
+            <div class="col-md-3 border text-center">
+                <p>Add to Favorites:</p>
+                <a href="#"><i class="fas fa-heart"></i></a>
+            </div>
+
+            <div class="col-md-3 border text-center">
+                <p>Created On: @Model.CreatedOn.ToShortDateString()</p>
             </div>
         </div>
-    }
+    </div>
+
 </div>
 <br />
 <h5>Descaription:</h5>
@@ -61,8 +109,74 @@
 <p>@Model.Description</p>
 
 
+<div class="px-4 pt-3"> <button type="button" class="btn btn-primary float-right" onclick="showAddCommentForm(0)"><i class="fa fa-plus"></i>&nbsp; Comment</button> </div>
+<div class="clearfix"></div>
+
+@*@{ DisplayComments(null); }*@
+
+
+
+@foreach (var comment in @Model.Comments)
+{
+    <div class="container-fluid mt-100">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <div class="media flex-wrap w-100 align-items-center">
+                            <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1574583246/AAA/2.jpg" class="d-block ui-w-40 rounded-circle" alt="">
+                            <div class="media-body ml-3">
+                                @comment.UserUserName
+                                <div class="text-muted small">
+                                    @comment.CreatedOn
+                                </div>
+                            </div>
+                            <div class="text-muted small ml-3">
+                                @if (this.User.Identity.IsAuthenticated)
+                                {
+                                    <div class="px-4 pt-3"> <button type="button" class="btn btn-secondary" onclick="showAddCommentForm(@comment.Id)"><i class="fa fa-plus"></i>&nbsp; Answer</button> </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <article>
+                            @comment.Content
+                        </article>
+                        @*@{ DisplayComments(comment.Id); }*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <form asp-controller="Comments" asp-action="Create" method="post" id="AddCommentForm" style="display: none">
+        <input type="hidden" name="VideoId" value="@this.Model.Id" />
+        <input type="hidden" name="ParentId" value="0" />
+        <div>
+            <label for="Content"></label>
+            <textarea name="Content" id="Content" class="form-control"></textarea>
+        </div>
+        <div>
+            <input type="submit" class="btn btn-primary" value="Add comment" />
+        </div>
+    </form>
+</div>
+
+
 @section Scripts {
     <script>
+
+        function showAddCommentForm(parentId) {
+            $("#AddCommentForm input[name='ParentId']").val(parentId);
+            $("#AddCommentForm").show();
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $("#AddCommentForm").offset().top
+            }, 1000);
+        }
+
         function sendVote(videoId, isUpVote) {
             var token = $("#votesForm input[name=__RequestVerificationToken]").val();
             var json = { videoId: videoId, isUpVote: isUpVote };
