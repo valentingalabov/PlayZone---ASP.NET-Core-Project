@@ -69,5 +69,18 @@
 
             return favoriteVideos;
         }
+
+        public bool IsVideoExist(string videoId, string userId)
+        {
+            var favoriteVideo = this.favoritesVideosRepository.All()
+                .FirstOrDefault(v => v.VideoId == videoId && v.UserId == userId);
+
+            if (favoriteVideo != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

@@ -9,7 +9,6 @@
     using PlayZone.Services.Data;
     using PlayZone.Web.ViewModels.Favorites;
 
-    [Authorize]
     public class FavoritesController : BaseController
     {
         private readonly IFavoritesServices favoritesService;
@@ -21,6 +20,7 @@
             this.userManager = userManager;
         }
 
+        [Authorize]
         public async Task<IActionResult> AddVideoToFavorites(string id)
         {
             var userId = this.userManager.GetUserId(this.User);
@@ -42,6 +42,7 @@
             return this.View(viewModel);
         }
 
+        [Authorize]
         public async Task<IActionResult> DeleteFromFavorites(string id)
         {
             var userId = this.userManager.GetUserId(this.User);

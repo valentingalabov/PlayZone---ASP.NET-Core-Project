@@ -10,5 +10,7 @@
         IEnumerable<T> GetFavoriteVideosByUser<T>(string userId);
 
         Task DeleteFromFavoritesAsync(string videoId, string userId);
+
+        bool IsVideoExist(string videoId, string userId);
     }
 }

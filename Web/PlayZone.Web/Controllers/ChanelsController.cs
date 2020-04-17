@@ -54,24 +54,8 @@
                 return this.RedirectToAction("Create");
             }
 
-            var user = await this.userManager.GetUserAsync(this.User);
-            if (user.ChanelId == id)
-            {
-                return this.RedirectToAction("OwnerDetails", new { Id = id });
-            }
+            //var user = await this.userManager.GetUserAsync(this.User);
 
-            var viewModel = this.chanelsService.GetChanelById<ChanelDetailsViewModel>(id);
-
-            if (viewModel == null)
-            {
-                return this.NotFound();
-            }
-
-            return this.View(viewModel);
-        }
-
-        public IActionResult OwnerDetails(string id)
-        {
             var viewModel = this.chanelsService.GetChanelById<ChanelDetailsViewModel>(id);
 
             if (viewModel == null)
@@ -111,7 +95,7 @@
                 Description = chanel.Description,
             };
 
-            return this.PartialView("_ChanelDescriptionPartial", viewModel);
+            return this.View(viewModel);
         }
 
         public IActionResult Videos(string id)
@@ -119,10 +103,11 @@
             // var chanel = this.chanelsService.GetChanelById<ChanelViewModel>(id);
             var viewModel = new AllVideosByChanelViewModel
             {
+                Chanel = this.chanelsService.GetChanelById<ChanelViewModel>(id),
                 Videos = this.chanelsService.GetVieosByChanel<VideoByChanelViewModel>(id),
             };
 
-            return this.PartialView("_ChanelVideosPartial", viewModel);
+            return this.View(viewModel);
         }
     }
 }
