@@ -128,14 +128,24 @@
                 .OrderByDescending(v => v.CreatedOn)
                 .Skip(skip);
 
-            return videos.Take(take.Value).To<T>().ToList();
+            return videos.Take(take.Value)
+                         .To<T>()
+                         .ToList();
         }
 
         public int GetAllVideosByChanelCount(string id)
         {
-           return this.videoReposiroty.All()
-                .Where(c => c.ChanelId == id)
-                .Count();
+            return this.videoReposiroty.All()
+                 .Where(c => c.ChanelId == id)
+                 .Count();
+        }
+
+        public T GetChanelDescription<T>(string id)
+        {
+            return this.chanelRepository.All()
+                .Where(c => c.Id == id)
+                .To<T>()
+                .FirstOrDefault();
         }
     }
 }

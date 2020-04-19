@@ -18,6 +18,8 @@
 
         int GetAllVideosByChanelCount(string id);
 
+        T GetChanelDescription<T>(string id);
+
         Task CreateImage(string url, string cloudinaryPublicId, Chanel currentChanel);
 
         IEnumerable<T> GetVieosByChanel<T>(string id, int? take, int skip = 0);

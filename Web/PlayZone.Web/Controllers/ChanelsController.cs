@@ -89,12 +89,7 @@
 
         public IActionResult Description(string id)
         {
-            var chanel = this.chanelsService.GetChanelById<ChanelDetailsViewModel>(id);
-
-            var viewModel = new ChanelDescriptionViewModel
-            {
-                Description = chanel.Description,
-            };
+            var viewModel = this.chanelsService.GetChanelDescription<ChanelDescriptionViewModel>(id);
 
             return this.View(viewModel);
         }
