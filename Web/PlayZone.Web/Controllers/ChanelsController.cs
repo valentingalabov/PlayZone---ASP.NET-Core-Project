@@ -101,6 +101,11 @@
 
         public IActionResult Videos(string id, int page = 1)
         {
+            if (page <= 0)
+            {
+                page = 1;
+            }
+
             var viewModel = new AllVideosByChanelViewModel();
             viewModel.Chanel = this.chanelsService.GetChanelById<ChanelViewModel>(id);
             viewModel.Videos = this.chanelsService.GetVieosByChanel<VideoByChanelViewModel>(id, ItemsPerPage, (page - 1) * ItemsPerPage);

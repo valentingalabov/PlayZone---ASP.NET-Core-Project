@@ -20,9 +20,14 @@
             this.videosService = videosService;
         }
 
-        // [Route("/")]
+        [Route("/")]
         public IActionResult Index(int page = 1)
         {
+            if (page <= 0)
+            {
+                page = 1;
+            }
+
             var viewModel = new IndexViewModel();
 
             viewModel.AllVideos = this.videosService.GetAllVideos<IndexVideoViewModel>(ItemsPerPage, (page - 1) * ItemsPerPage);
