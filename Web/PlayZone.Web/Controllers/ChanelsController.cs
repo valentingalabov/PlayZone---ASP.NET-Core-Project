@@ -1,5 +1,6 @@
 ﻿namespace PlayZone.Web.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -12,6 +13,8 @@
 
     public class ChanelsController : BaseController
     {
+        private const int ItemsPerPage = 6;
+
         private readonly IChanelsService chanelsService;
         private readonly UserManager<ApplicationUser> userManager;
 
@@ -47,14 +50,12 @@
             return this.RedirectToAction("Details", new { Id = chanelId });
         }
 
-        public async Task<IActionResult> Details(string id)
+        public IActionResult Details(string id)
         {
             if (id == null)
             {
                 return this.RedirectToAction("Create");
             }
-
-            //var user = await this.userManager.GetUserAsync(this.User);
 
             var viewModel = this.chanelsService.GetChanelById<ChanelDetailsViewModel>(id);
 
@@ -98,14 +99,14 @@
             return this.View(viewModel);
         }
 
-        public IActionResult Videos(string id)
+        public IActionResult Videos(string id, int page = 1)
         {
-            // var chanel = this.chanelsService.GetChanelById<ChanelViewModel>(id);
-            var viewModel = new AllVideosByChanelViewModel
-            {
-                Chanel = this.chanelsService.GetChanelById<ChanelViewModel>(id),
-                Videos = this.chanelsService.GetVieosByChanel<VideoByChanelViewModel>(id),
-            };
+            var viewModel = new AllVideosByChanelViewModel();
+            viewModel.Chanel = this.chanelsService.GetChanelById<ChanelViewModel>(id);
+            viewModel.Videos = this.chanelsService.GetVieosByChanel<VideoByChanelViewModel>(id, ItemsPerPage, (page - 1) * ItemsPerPage);
+            var count = this.chanelsService.GetAllVideosByChanelCount(id);
+            viewModel.PagesCount = (int)Math.Ceiling((double)count / ItemsPerPage);
+            viewModel.CurrentPage = page;
 
             return this.View(viewModel);
         }

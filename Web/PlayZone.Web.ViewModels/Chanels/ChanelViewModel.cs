@@ -5,6 +5,8 @@
 
     public class ChanelViewModel : IMapFrom<Chanel>
     {
+        public string Id { get; set; }
+
         public string Title { get; set; }
 
         public Image Image { get; set; }

@@ -16,8 +16,10 @@
 
         T GetChanelById<T>(string id);
 
+        int GetAllVideosByChanelCount(string id);
+
         Task CreateImage(string url, string cloudinaryPublicId, Chanel currentChanel);
 
-        IEnumerable<T> GetVieosByChanel<T>(string id);
+        IEnumerable<T> GetVieosByChanel<T>(string id, int? take, int skip = 0);
     }
 }

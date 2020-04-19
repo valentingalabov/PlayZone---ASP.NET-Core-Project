@@ -97,7 +97,9 @@
 
         public T GetChanelById<T>(string id)
         {
-            var chanel = this.chanelRepository.All().Where(c => c.Id == id).To<T>().FirstOrDefault();
+            var chanel = this.chanelRepository.All()
+                .Where(c => c.Id == id).To<T>()
+                .FirstOrDefault();
 
             return chanel;
         }
@@ -119,11 +121,21 @@
             await this.imageRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<T> GetVieosByChanel<T>(string id)
+        public IEnumerable<T> GetVieosByChanel<T>(string id, int? take, int skip = 0)
         {
-            var videos = this.videoReposiroty.All().Where(v => v.ChanelId == id);
+            var videos = this.videoReposiroty.All()
+                .Where(v => v.ChanelId == id)
+                .OrderByDescending(v => v.CreatedOn)
+                .Skip(skip);
 
-            return videos.To<T>().ToList();
+            return videos.Take(take.Value).To<T>().ToList();
+        }
+
+        public int GetAllVideosByChanelCount(string id)
+        {
+           return this.videoReposiroty.All()
+                .Where(c => c.ChanelId == id)
+                .Count();
         }
     }
 }
