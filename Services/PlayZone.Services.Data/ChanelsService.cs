@@ -71,6 +71,7 @@
 
             byte[] destinationImage;
             ImageUploadResult result;
+
             using (var memoryStream = new MemoryStream())
             {
                 await file.CopyToAsync(memoryStream);
@@ -140,12 +141,29 @@
                  .Count();
         }
 
-        public T GetChanelDescription<T>(string id)
+        public bool IsOwner(string chanelId, ApplicationUser user)
         {
-            return this.chanelRepository.All()
+            if (user.ChanelId == chanelId)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task EditChanelAsync(string id, string title, string description)
+        {
+            var chanel = this.chanelRepository.All()
                 .Where(c => c.Id == id)
-                .To<T>()
                 .FirstOrDefault();
+
+            if (chanel != null)
+            {
+                chanel.Title = title;
+                chanel.Description = description;
+            }
+
+            await this.chanelRepository.SaveChangesAsync();
         }
     }
 }

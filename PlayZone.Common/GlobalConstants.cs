@@ -5,6 +5,5 @@
         public const string SystemName = "PlayZone";
 
         public const string AdministratorRoleName = "Administrator";
-
     }
 }

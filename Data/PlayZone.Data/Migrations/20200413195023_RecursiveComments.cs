@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace PlayZone.Data.Migrations
+﻿namespace PlayZone.Data.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class RecursiveComments : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

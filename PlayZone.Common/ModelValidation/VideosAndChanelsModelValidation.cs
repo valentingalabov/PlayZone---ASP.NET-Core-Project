@@ -13,6 +13,5 @@
         public const string TitleLenghtErrorMessage = "Title must be in range between 4 and 60 symbols!";
 
         public const string UrlLenghtErrorMessage = "Url must be in range between 4 and 60 symbols!";
-
     }
 }

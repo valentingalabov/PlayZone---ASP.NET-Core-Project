@@ -43,15 +43,20 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Chanels" asp-action="Details" asp-route-id="@userToFind.ChanelId">Your Chanel</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Videos" asp-action="Create">Add Video</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Favorites" asp-action="All">Favorites list</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Histories" asp-action="All">History</a>
-                            </li>
+
+                            if (userToFind.Chanel != null)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Videos" asp-action="Create">Add Video</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Favorites" asp-action="All">Favorites list</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Histories" asp-action="All">History</a>
+                                </li>
+
+                            }
                         }
                     </ul>
                 </div>

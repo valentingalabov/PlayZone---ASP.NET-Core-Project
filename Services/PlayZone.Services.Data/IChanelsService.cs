@@ -18,10 +18,12 @@
 
         int GetAllVideosByChanelCount(string id);
 
-        T GetChanelDescription<T>(string id);
+        bool IsOwner(string chanelId, ApplicationUser user);
 
         Task CreateImage(string url, string cloudinaryPublicId, Chanel currentChanel);
 
         IEnumerable<T> GetVieosByChanel<T>(string id, int? take, int skip = 0);
+
+        Task EditChanelAsync(string id, string title, string description);
     }
 }

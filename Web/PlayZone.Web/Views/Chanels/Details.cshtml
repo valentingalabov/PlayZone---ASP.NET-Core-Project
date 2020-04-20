@@ -10,14 +10,9 @@
         <div class="container">
             <div>
 
-                <img src="http://res.cloudinary.com/dqh6dvohu/image/upload/c_thumb,g_center,h_339,w_958/@Model.ImageUrl" class="img-fluid">
+                <img src="@Model.EmbedChanelImageUrl" class="img-fluid">
             </div>
         </div>
-        <div class="btn btn-mdb-color btn-rounded float-left">
-            <a asp-controller="Chanels" asp-action="ImageUpload" asp-route-id="@Model.Id">Change Image</a>
-        </div>
-        <br />
-        <br />
     }
     else
     {
@@ -28,34 +23,34 @@
                     <img src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg" width="958" height="339" class="img-fluid"
                          alt="example placeholder">
                 </div>
-                <div class="d-flex justify-content-center">
-                    <div class="btn btn-mdb-color btn-rounded float-left">
-                        <a asp-controller="Chanels" asp-action="ImageUpload" asp-route-id="@Model.Id">Image Upload</a>
-                    </div>
-                </div>
+
             </div>
         </form>
-
-
     }
-    <div>
+
+    @if (Model.IsCreator)
+    {
+        <div class="row justify-content-center">
+
+            <a class="col-md-2 text-center btn btn-primary mr-1 mt-1" asp-controller="Chanels" asp-action="ImageUpload" asp-route-id="@Model.Id">Change Image</a>
+
+            <a class="col-md-2 text-center btn btn-primary mr-1 mt-1" asp-controller="Chanels" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        </div>
+    }
+    <br />
+    <br />
+    <div class="row justify-content-center">
         <h1>@Model.Title</h1>
     </div>
+    <hr />
+    <div class="row d-flex justify-content-center">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light row">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" asp-controller="Chanels" asp-action="Videos" asp-route-id="@Model.Id" >Videos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Chanels" asp-action="Description" asp-route-id="@Model.Id">Description</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Videos" asp-action="Create" asp-route-id="@Model.Id">Add Video</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+        <a class="col-md-2 text-center btn btn-primary mr-1 mt-1" asp-controller="Chanels" asp-action="Videos" asp-route-id="@Model.Id">Videos</a>
+        <a class="col-md-2 text-center btn btn-primary mr-1 mt-1" asp-controller="Chanels" asp-action="Description" asp-route-id="@Model.Id">Description</a>
+        @if (Model.IsCreator)
+        {
+            <a class="col-md-2 text-center btn btn-primary mr-1 mt-1" asp-controller="Videos" asp-action="Create" asp-route-id="@Model.Id">Add Video</a>
+        }
 
+    </div>
 </div>

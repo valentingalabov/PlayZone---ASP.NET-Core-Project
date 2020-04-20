@@ -50,14 +50,20 @@
             return this.RedirectToAction("Details", new { Id = chanelId });
         }
 
-        public IActionResult Details(string id)
+        public async Task<IActionResult> Details(string id)
         {
-            if (id == null)
+            var viewModel = this.chanelsService.GetChanelById<ChanelDetailsViewModel>(id);
+
+            if (viewModel == null)
             {
                 return this.RedirectToAction("Create");
             }
 
-            var viewModel = this.chanelsService.GetChanelById<ChanelDetailsViewModel>(id);
+            var user = await this.userManager.GetUserAsync(this.User);
+            if (user != null)
+            {
+                viewModel.IsCreator = this.chanelsService.IsOwner(id, user);
+            }
 
             if (viewModel == null)
             {
@@ -89,7 +95,7 @@
 
         public IActionResult Description(string id)
         {
-            var viewModel = this.chanelsService.GetChanelDescription<ChanelDescriptionViewModel>(id);
+            var viewModel = this.chanelsService.GetChanelById<ChanelDescriptionViewModel>(id);
 
             return this.View(viewModel);
         }
@@ -109,6 +115,29 @@
             viewModel.CurrentPage = page;
 
             return this.View(viewModel);
+        }
+
+        [Authorize]
+        public IActionResult Edit(string id)
+        {
+            var viewModel = this.chanelsService.GetChanelById<ChanelEditInputModel>(id);
+            return this.View(viewModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Edit(ChanelEditInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            //this.chanelsService.IsValidChanel(input.Title);
+
+            await this.chanelsService.EditChanelAsync(input.Id, input.Title, input.Description);
+
+            return this.RedirectToAction("Details", new { Id = input.Id });
         }
     }
 }
