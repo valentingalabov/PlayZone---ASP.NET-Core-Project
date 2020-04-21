@@ -33,6 +33,7 @@
             return this.View(viewModel);
         }
 
+        [Authorize]
         public async Task<IActionResult> DeleteFromHistory(string id)
         {
             var userId = this.userManager.GetUserId(this.User);

@@ -68,21 +68,82 @@
 
         public async Task<IActionResult> Details(string id)
         {
-            var videoViewModel = this.videosService.GetVideoById<VideoDetailsViewModel>(id);
+            var viewModel = this.videosService.GetVideoById<VideoDetailsViewModel>(id);
 
             var userId = this.userManager.GetUserId(this.User);
+
+            if (viewModel.UserId == userId)
+            {
+                viewModel.IsCreator = true;
+            }
 
             if (userId != null)
             {
                 await this.historiesService.AddVideoToHistoryAsync(id, userId);
             }
 
-            if (videoViewModel == null)
+            if (viewModel == null)
             {
                 return this.NotFound();
             }
 
-            return this.View(videoViewModel);
+            return this.View(viewModel);
+        }
+
+        [Authorize]
+        public IActionResult Edit(string id)
+        {
+            var userId = this.userManager.GetUserId(this.User);
+
+            if (!this.videosService.IsOwner(id, userId))
+            {
+                return this.RedirectToAction("Details", new { Id = id });
+            }
+
+            var viewModel = this.videosService.GetVideoById<VideoEditInputModel>(id);
+            string url = $"https://www.youtube.com/watch?v={viewModel.Url}";
+            viewModel.Categories = this.categoriesService.GetAllCategories<CategoryDropDownViewModel>();
+            viewModel.Url = url;
+            return this.View(viewModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Edit(VideoEditInputModel input)
+        {
+            if (
+                   !this.ModelState.IsValid
+                   || !this.videosService.IsValidVideoAfterEdit(input.Id, input.Title, input.Url))
+            {
+                return this.RedirectToAction("Edit", new { Id = input.Id });
+            }
+
+            await this.videosService.EditVideoAsync(input.Id, input.Title, input.Url, input.Description, input.CategoryId);
+
+            return this.RedirectToAction("Details", new { Id = input.Id });
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var userId = this.userManager.GetUserId(this.User);
+
+            if (!this.videosService.IsOwner(id, userId))
+            {
+                return this.RedirectToAction("Details", new { Id = id });
+            }
+
+            await this.videosService.Delete(id);
+
+            return this.RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public IActionResult ConfirmationDelete(string id)
+        {
+            var viewModel = this.videosService.GetVideoById<ConfirmationDeleteViewModel>(id);
+
+            return this.View(viewModel);
         }
     }
 }

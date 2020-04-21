@@ -121,6 +121,7 @@
         public IActionResult Edit(string id)
         {
             var viewModel = this.chanelsService.GetChanelById<ChanelEditInputModel>(id);
+
             return this.View(viewModel);
         }
 
@@ -133,11 +134,10 @@
                 return this.View(input);
             }
 
-            //this.chanelsService.IsValidChanel(input.Title);
-
+            // this.chanelsService.IsValidChanel(input.Title);
             await this.chanelsService.EditChanelAsync(input.Id, input.Title, input.Description);
 
-            return this.RedirectToAction("Details", new { Id = input.Id });
+            return this.RedirectToAction("Index");
         }
     }
 }

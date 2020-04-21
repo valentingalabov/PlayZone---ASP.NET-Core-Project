@@ -1,7 +1,7 @@
 ﻿namespace PlayZone.Web.ViewModels.Chanels
 {
     using System.ComponentModel.DataAnnotations;
-    using Microsoft.AspNetCore.Http;
+
     using PlayZone.Data.Models;
     using PlayZone.Services.Mapping;
 
@@ -19,6 +19,5 @@
         public string Description { get; set; }
 
         public string UserId { get; set; }
-
     }
 }

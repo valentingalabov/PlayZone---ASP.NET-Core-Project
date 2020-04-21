@@ -24,6 +24,8 @@
 
         public string ChanelId { get; set; }
 
+        public string UserId { get; set; }
+
         public string ChanelImageUrl { get; set; }
 
         public string EmbedVideoUrl => $"https://www.youtube.com/embed/{this.Url}";
@@ -35,6 +37,8 @@
         public int UpVotesCount { get; set; }
 
         public int DownVotesCount { get; set; }
+
+        public bool IsCreator { get; set; }
 
         public IEnumerable<VideoCommentViewModel> Comments { get; set; }
 

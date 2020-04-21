@@ -61,7 +61,7 @@
     <div class="col-md-2">
         <a asp-controller="Chanels" asp-action="Details" asp-route-id="@Model.ChanelId"><img src="@Model.EmbedChanelImageUrl" /></a>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
         <p class="card-text">
             Chanel: <a asp-controller="Chanels" asp-action="Details" asp-route-id="@Model.ChanelId">@Model.ChanelTitle</a>
         </p>
@@ -88,19 +88,29 @@
             </div>
             <div class="col-md-3 border text-center">
                 <p>Add to Favorites:</p>
-                <form id="favoriteVideo" method="get"></form>
-                <a  asp-controller="Favorites" asp-action="AddVideoToFavorites" asp-route-id="@Model.Id"><i class="fas fa-heart"></i></a>
-
+                <a asp-controller="Favorites" asp-action="AddVideoToFavorites" asp-route-id="@Model.Id"><i class="fas fa-heart"></i></a>
             </div>
-
-
             <div class="col-md-3 border text-center">
                 <p>Created On: <time datetime="@Model.CreatedOn.ToString("O")"></time></p>
             </div>
+
         </div>
     </div>
 
 </div>
+
+@if (this.Model.IsCreator)
+{
+    <div class="row justify-content-center">
+        <div>
+            <a class="btn btn-primary mr-1 mt-1" asp-controller="Videos" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        </div>
+        <div>
+            <a class="btn btn-danger mr-1 mt-1" asp-controller="Videos" asp-action="ConfirmationDelete" asp-route-id="@Model.Id">Delete</a>
+        </div>
+    </div>
+}
+
 <br />
 <h5>Descaription:</h5>
 <hr />
@@ -128,24 +138,8 @@
 </div>
 
 
-@section Scripts {
-    @*<script>
-        function favoriteVideo(videoId) {
-            var token = $("#votesForm input[name=__RequestVerificationToken]").val();
-            var json = { videoId: videoId };
-            $.ajax({
-                url: "/Favorites/AddRemoveVideoToFavorites",
-                type: "GET",
-                data: JSON.stringify(json),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                headers: { 'X-CSRF-TOKEN': token },
-                success: function (json) {
-                    console.log(json);
+@section Scripts {   
 
-                }
-            });
-    </script>*@
     <script>
         function showAddCommentForm(parentId) {
             $("#AddCommentForm input[name='ParentId']").val(parentId);

@@ -6,8 +6,10 @@
     using PlayZone.Data.Models;
     using PlayZone.Services.Mapping;
 
-    public class VideoCreateInputModel : IMapFrom<Video>
+    public class VideoEditInputModel : IMapFrom<Video>
     {
+        public string Id { get; set; }
+
         [Required(ErrorMessage = "Url is Required!")]
         [RegularExpression(@"^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$", ErrorMessage = "Invalid Url!")]
         public string Url { get; set; }
@@ -22,7 +24,6 @@
 
         [Range(1, int.MaxValue)]
         [Display(Name = "Categories")]
-
         public int CategoryId { get; set; }
 
         public IEnumerable<CategoryDropDownViewModel> Categories { get; set; }
