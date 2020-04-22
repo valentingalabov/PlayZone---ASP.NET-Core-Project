@@ -141,9 +141,9 @@
                  .Count();
         }
 
-        public bool IsOwner(string chanelId, ApplicationUser user)
+        public bool IsOwner(string chanelId, string userChanelId)
         {
-            if (user.ChanelId == chanelId)
+            if (userChanelId == chanelId)
             {
                 return true;
             }
@@ -164,6 +164,20 @@
             }
 
             await this.chanelRepository.SaveChangesAsync();
+        }
+
+        public bool IsValidChaneAfterEdit(string chanelId, string title)
+        {
+            var chanels = this.chanelRepository.All()
+                .Where(c => c.Id != chanelId)
+                .ToList();
+
+            if (chanels.Any(c => c.Title == title))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

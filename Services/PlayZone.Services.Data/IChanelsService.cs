@@ -12,13 +12,15 @@
 
         bool IsValidChanel(string title);
 
+        bool IsValidChaneAfterEdit(string chanelId, string title);
+
         Task UploadAsync(IFormFile file, string id);
 
         T GetChanelById<T>(string id);
 
         int GetAllVideosByChanelCount(string id);
 
-        bool IsOwner(string chanelId, ApplicationUser user);
+        bool IsOwner(string chanelId, string userChanelId);
 
         Task CreateImage(string url, string cloudinaryPublicId, Chanel currentChanel);
 

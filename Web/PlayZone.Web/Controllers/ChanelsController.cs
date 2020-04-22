@@ -62,7 +62,7 @@
             var user = await this.userManager.GetUserAsync(this.User);
             if (user != null)
             {
-                viewModel.IsCreator = this.chanelsService.IsOwner(id, user);
+                viewModel.IsCreator = this.chanelsService.IsOwner(id, user.ChanelId);
             }
 
             if (viewModel == null)
@@ -118,8 +118,14 @@
         }
 
         [Authorize]
-        public IActionResult Edit(string id)
+        public async Task<IActionResult> Edit(string id)
         {
+            var user = await this.userManager.GetUserAsync(this.User);
+            if (!this.chanelsService.IsOwner(id, user.ChanelId))
+            {
+                return this.RedirectToAction("Details", new { Id = id });
+            }
+
             var viewModel = this.chanelsService.GetChanelById<ChanelEditInputModel>(id);
 
             return this.View(viewModel);
@@ -129,15 +135,14 @@
         [HttpPost]
         public async Task<IActionResult> Edit(ChanelEditInputModel input)
         {
-            if (!this.ModelState.IsValid)
+            if (!this.ModelState.IsValid || !this.chanelsService.IsValidChaneAfterEdit(input.Id, input.Title))
             {
                 return this.View(input);
             }
 
-            // this.chanelsService.IsValidChanel(input.Title);
             await this.chanelsService.EditChanelAsync(input.Id, input.Title, input.Description);
 
-            return this.RedirectToAction("Index");
+            return this.RedirectToAction("Details", new { input.Id });
         }
     }
 }
