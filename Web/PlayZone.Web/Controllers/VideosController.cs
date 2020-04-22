@@ -46,9 +46,9 @@
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
-            if (user.ChanelId == null)
+            if (user.ChannelId == null)
             {
-                return this.Redirect("/Chanels/Create");
+                return this.Redirect("/Channels/Create");
             }
 
             if (!this.ModelState.IsValid)
@@ -70,7 +70,7 @@
                 return this.View(input);
             }
 
-            var videoId = await this.videosService.CreateVideoAsync(input.Title, input.Url, input.Description, input.CategoryId, user.Id, user.ChanelId);
+            var videoId = await this.videosService.CreateVideoAsync(input.Title, input.Url, input.Description, input.CategoryId, user.Id, user.ChannelId);
 
             return this.RedirectToAction("Details", new { Id = videoId });
         }

@@ -17,7 +17,7 @@
             this.videosRepository = videosRepository;
         }
 
-        public async Task<string> CreateVideoAsync(string title, string url, string description, int categoryId, string userId, string chanelId)
+        public async Task<string> CreateVideoAsync(string title, string url, string description, int categoryId, string userId, string channelId)
         {
             var video = new Video
             {
@@ -26,7 +26,7 @@
                 CategoryId = categoryId,
                 Description = description,
                 UserId = userId,
-                ChanelId = chanelId,
+                ChannelId = channelId,
             };
 
             await this.videosRepository.AddAsync(video);
@@ -96,7 +96,6 @@
                 await this.videosRepository.SaveChangesAsync();
             }
         }
-
 
         public string GetShortUrl(string url)
         {

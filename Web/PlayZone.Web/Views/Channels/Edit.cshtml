@@ -1,4 +1,4 @@
-﻿@model PlayZone.Web.ViewModels.Chanels.ChanelEditInputModel
+﻿@model PlayZone.Web.ViewModels.Channels.ChannelEditInputModel
 @{
     ViewData["Title"] = "Edit";
 }
@@ -6,7 +6,7 @@
 <h1>Edit</h1>
 
 <div class="pagination-centered">
-    <form method="post" asp-controller="Chanels" asp-action="Edit">
+    <form method="post" asp-controller="Channels" asp-action="Edit">
         <div>
             <label asp-for="Title"></label>
             <input asp-for="Title" class="form-control" value="@Model.Title" />
@@ -26,7 +26,7 @@
         <hr />
         <div>
             <input type="submit" class="btn btn-primary" value="Edit" />
-            <a asp-controller="Chanels" asp-action="Details" asp-route-id="@Model.Id"  class="btn btn-primary">Cancel</a>
+            <a asp-controller="Channels" asp-action="Details" asp-route-id="@Model.Id"  class="btn btn-primary">Cancel</a>
 
         </div>
 

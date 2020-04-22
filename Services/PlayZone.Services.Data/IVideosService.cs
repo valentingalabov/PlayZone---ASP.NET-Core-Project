@@ -11,7 +11,7 @@
 
         int GetAllVideosCount();
 
-        Task<string> CreateVideoAsync(string title, string url, string description, int categoryId, string userId, string chanelId);
+        Task<string> CreateVideoAsync(string title, string url, string description, int categoryId, string userId, string channelId);
 
         T GetVideoById<T>(string id);
 

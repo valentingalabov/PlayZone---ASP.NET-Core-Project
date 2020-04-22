@@ -41,10 +41,10 @@
                         @if (userToFind != null)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Chanels" asp-action="Details" asp-route-id="@userToFind.ChanelId">Your Chanel</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Channels" asp-action="Details" asp-route-id="@userToFind.ChannelId">Your channel</a>
                             </li>
 
-                            if (userToFind.ChanelId != null)
+                            if (userToFind.ChannelId != null)
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Videos" asp-action="Create">Add Video</a>

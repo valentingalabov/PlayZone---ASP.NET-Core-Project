@@ -20,17 +20,17 @@
 
         public int CategoryId { get; set; }
 
-        public string ChanelTitle { get; set; }
+        public string ChannelTitle { get; set; }
 
-        public string ChanelId { get; set; }
+        public string ChannelId { get; set; }
 
         public string UserId { get; set; }
 
-        public string ChanelImageUrl { get; set; }
+        public string ChannelImageUrl { get; set; }
 
         public string EmbedVideoUrl => $"https://www.youtube.com/embed/{this.Url}";
 
-        public string EmbedChanelImageUrl => $"https://res.cloudinary.com/dqh6dvohu/image/upload/w_100,c_fill,ar_1:1,g_auto,r_max,bo_2px_solid_blue,b_rgb:ffffff/{this.ChanelImageUrl}";
+        public string EmbedChannelImageUrl => $"https://res.cloudinary.com/dqh6dvohu/image/upload/w_100,c_fill,ar_1:1,g_auto,r_max,bo_2px_solid_blue,b_rgb:ffffff/{this.ChannelImageUrl}";
 
         public DateTime CreatedOn { get; set; }
 

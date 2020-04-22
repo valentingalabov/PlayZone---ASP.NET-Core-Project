@@ -29,9 +29,9 @@ namespace PlayZone.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
-        public string ChanelId { get; set; }
+        public string ChannelId { get; set; }
 
-        public virtual Chanel Chanel { get; set; }
+        public virtual Channel Channel { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 

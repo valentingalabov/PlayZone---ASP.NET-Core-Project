@@ -1,9 +1,9 @@
-﻿namespace PlayZone.Web.ViewModels.Chanels
+﻿namespace PlayZone.Web.ViewModels.Channels
 {
     using PlayZone.Data.Models;
     using PlayZone.Services.Mapping;
 
-    public class ChanelViewModel : IMapFrom<Chanel>
+    public class ChannelViewModel : IMapFrom<Channel>
     {
         public string Id { get; set; }
 

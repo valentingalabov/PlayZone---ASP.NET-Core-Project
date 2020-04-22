@@ -25,7 +25,7 @@
                     Title = "Sunday Motorcycle Riding",
                     Description = "Add Descriotion Here",
                     UserId = dbContext.Users.Select(u => u.Id).FirstOrDefault(),
-                    Chanel = dbContext.Chanels.FirstOrDefault(),
+                    Channel = dbContext.Channels.FirstOrDefault(),
                 },
                 new Video
                 {
@@ -34,7 +34,7 @@
                     Title = "Black Squat Sniper highlights",
                     Description = "Add Descriotion Here",
                     UserId = dbContext.Users.Select(u => u.Id).FirstOrDefault(),
-                    Chanel = dbContext.Chanels.FirstOrDefault(),
+                    Channel = dbContext.Channels.FirstOrDefault(),
                 },
                 new Video
                 {
@@ -43,7 +43,7 @@
                     Title = "Fury Warrior Rbg's Cataclysm wow 4.3.4",
                     Description = "Add Descriotion Here",
                     UserId = dbContext.Users.Select(u => u.Id).FirstOrDefault(),
-                    Chanel = dbContext.Chanels.FirstOrDefault(),
+                    Channel = dbContext.Channels.FirstOrDefault(),
                 },
             };
 

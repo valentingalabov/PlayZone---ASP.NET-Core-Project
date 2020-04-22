@@ -4,18 +4,18 @@
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
     using PlayZone.Data.Models;
 
-    public class ChanelConfiguration : IEntityTypeConfiguration<Chanel>
+    public class ChannelConfiguration : IEntityTypeConfiguration<Channel>
     {
-        public void Configure(EntityTypeBuilder<Chanel> chanel)
+        public void Configure(EntityTypeBuilder<Channel> channel)
         {
-            chanel
+            channel
                 .HasOne(u => u.User)
-                .WithOne(c => c.Chanel)
-                .HasForeignKey<Chanel>(u => u.UserId);
+                .WithOne(c => c.Channel)
+                .HasForeignKey<Channel>(u => u.UserId);
 
-            chanel
+            channel
                 .HasOne(i => i.Image)
-                .WithOne(c => c.Chanel)
+                .WithOne(c => c.Channel)
                 .HasForeignKey<Image>(i => i.Id);
         }
     }

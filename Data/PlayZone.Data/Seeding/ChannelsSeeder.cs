@@ -6,27 +6,27 @@
 
     using PlayZone.Data.Models;
 
-    public class ChanelsSeeder : ISeeder
+    public class ChannelsSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
-            if (dbContext.Chanels.Any())
+            if (dbContext.Channels.Any())
             {
                 return;
             }
 
             var videos = dbContext.Videos.ToList();
             var user = dbContext.Users.FirstOrDefault();
-            var chanel = new Chanel
+            var channel = new Channel
             {
-                Title = "EnduroVideoChanel",
+                Title = "EnduroVideochannel",
                 UserId = user.Id,
-                Description = "This is Chanel with Enduro Content!",
+                Description = "This is channel with Enduro Content!",
                 Videos = videos,
             };
 
-            await dbContext.Chanels.AddAsync(chanel);
-            user.ChanelId = chanel.Id;
+            await dbContext.Channels.AddAsync(channel);
+            user.ChannelId = channel.Id;
         }
     }
 }

@@ -21,7 +21,7 @@
                 PasswordHash = "123456",
                 EmailConfirmed = true,
                 Email = "v_galabow@abv.bg",
-                ChanelId = null,
+                ChannelId = null,
             };
 
             await dbContext.Users.AddAsync(user);

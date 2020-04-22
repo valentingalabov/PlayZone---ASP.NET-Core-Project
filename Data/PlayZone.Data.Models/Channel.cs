@@ -5,9 +5,9 @@
 
     using PlayZone.Data.Common.Models;
 
-    public class Chanel : BaseDeletableModel<string>
+    public class Channel : BaseDeletableModel<string>
     {
-        public Chanel()
+        public Channel()
         {
             this.Id = Guid.NewGuid().ToString();
             this.Videos = new HashSet<Video>();

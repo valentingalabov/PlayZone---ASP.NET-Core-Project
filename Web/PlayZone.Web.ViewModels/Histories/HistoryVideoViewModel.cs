@@ -9,9 +9,9 @@
     {
         public string VideoId { get; set; }
 
-        public string VideoChanelId { get; set; }
+        public string VideoChannelId { get; set; }
 
-        public string VideoChanelTitle { get; set; }
+        public string VideoChannelTitle { get; set; }
 
         public string VideoUrl { get; set; }
 

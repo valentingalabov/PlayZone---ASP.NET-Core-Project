@@ -9,18 +9,18 @@
     using Microsoft.AspNetCore.Mvc;
     using PlayZone.Data.Models;
     using PlayZone.Services.Data;
-    using PlayZone.Web.ViewModels.Chanels;
+    using PlayZone.Web.ViewModels.Channels;
 
-    public class ChanelsController : BaseController
+    public class ChannelsController : BaseController
     {
         private const int ItemsPerPage = 6;
 
-        private readonly IChanelsService chanelsService;
+        private readonly IChannelsService channelsService;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public ChanelsController(IChanelsService chanelsService, UserManager<ApplicationUser> userManager)
+        public ChannelsController(IChannelsService channelsService, UserManager<ApplicationUser> userManager)
         {
-            this.chanelsService = chanelsService;
+            this.channelsService = channelsService;
             this.userManager = userManager;
         }
 
@@ -32,12 +32,12 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Create(ChanelCreateInputModel input)
+        public async Task<IActionResult> Create(ChannelCreateInputModel input)
         {
             var user = await this.userManager.GetUserAsync(this.User);
-            if (user.ChanelId != null)
+            if (user.ChannelId != null)
             {
-                return this.RedirectToAction("Details", new { Id = user.ChanelId });
+                return this.RedirectToAction("Details", new { Id = user.ChannelId });
             }
 
             if (!this.ModelState.IsValid)
@@ -45,20 +45,20 @@
                 return this.View(input);
             }
 
-            if (!this.chanelsService.IsValidChanel(input.Title))
+            if (!this.channelsService.IsValidChannel(input.Title))
             {
-                input.ExistTitle = "This chanel title already exist!";
+                input.ExistTitle = "This channel title already exist!";
                 return this.View();
             }
 
-            var chanelId = await this.chanelsService.CreateChanelAsync(input.Title, input.Description, user);
+            var channelId = await this.channelsService.CreateChannelAsync(input.Title, input.Description, user);
 
-            return this.RedirectToAction("Details", new { Id = chanelId });
+            return this.RedirectToAction("Details", new { Id = channelId });
         }
 
         public async Task<IActionResult> Details(string id)
         {
-            var viewModel = this.chanelsService.GetChanelById<ChanelDetailsViewModel>(id);
+            var viewModel = this.channelsService.GetChannelById<ChannelDetailsViewModel>(id);
 
             if (viewModel == null)
             {
@@ -68,7 +68,7 @@
             var user = await this.userManager.GetUserAsync(this.User);
             if (user != null)
             {
-                viewModel.IsCreator = this.chanelsService.IsOwner(id, user.ChanelId);
+                viewModel.IsCreator = this.channelsService.IsOwner(id, user.ChannelId);
             }
 
             if (viewModel == null)
@@ -94,14 +94,14 @@
                 return this.View();
             }
 
-            await this.chanelsService.UploadAsync(file, id);
+            await this.channelsService.UploadAsync(file, id);
 
             return this.RedirectToAction("Details", new { Id = id });
         }
 
         public IActionResult Description(string id)
         {
-            var viewModel = this.chanelsService.GetChanelById<ChanelDescriptionViewModel>(id);
+            var viewModel = this.channelsService.GetChannelById<ChannelDescriptionViewModel>(id);
 
             return this.View(viewModel);
         }
@@ -113,10 +113,10 @@
                 page = 1;
             }
 
-            var viewModel = new AllVideosByChanelViewModel();
-            viewModel.Chanel = this.chanelsService.GetChanelById<ChanelViewModel>(id);
-            viewModel.Videos = this.chanelsService.GetVieosByChanel<VideoByChanelViewModel>(id, ItemsPerPage, (page - 1) * ItemsPerPage);
-            var count = this.chanelsService.GetAllVideosByChanelCount(id);
+            var viewModel = new AllVideosByChannelViewModel();
+            viewModel.Channel = this.channelsService.GetChannelById<ChannelViewModel>(id);
+            viewModel.Videos = this.channelsService.GetVieosByChannel<VideoByChannelViewModel>(id, ItemsPerPage, (page - 1) * ItemsPerPage);
+            var count = this.channelsService.GetAllVideosByChannelCount(id);
             viewModel.PagesCount = (int)Math.Ceiling((double)count / ItemsPerPage);
             viewModel.CurrentPage = page;
 
@@ -127,32 +127,32 @@
         public async Task<IActionResult> Edit(string id)
         {
             var user = await this.userManager.GetUserAsync(this.User);
-            if (!this.chanelsService.IsOwner(id, user.ChanelId))
+            if (!this.channelsService.IsOwner(id, user.ChannelId))
             {
                 return this.RedirectToAction("Details", new { Id = id });
             }
 
-            var viewModel = this.chanelsService.GetChanelById<ChanelEditInputModel>(id);
+            var viewModel = this.channelsService.GetChannelById<ChannelEditInputModel>(id);
 
             return this.View(viewModel);
         }
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Edit(ChanelEditInputModel input)
+        public async Task<IActionResult> Edit(ChannelEditInputModel input)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
             }
 
-            if (!this.chanelsService.IsValidChaneAfterEdit(input.Id, input.Title))
+            if (!this.channelsService.IsValidChaneAfterEdit(input.Id, input.Title))
             {
-                input.ExistTitle = "This chanel title already exist!";
+                input.ExistTitle = "This channel title already exist!";
                 return this.View(input);
             }
 
-            await this.chanelsService.EditChanelAsync(input.Id, input.Title, input.Description);
+            await this.channelsService.EditChannelAsync(input.Id, input.Title, input.Description);
 
             return this.RedirectToAction("Details", new { input.Id });
         }

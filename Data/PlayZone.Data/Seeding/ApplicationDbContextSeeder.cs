@@ -29,7 +29,7 @@
                               new UsersSeeder(),
                               new SettingsSeeder(),
                               new CategoriesSeeder(),
-                              new ChanelsSeeder(),
+                              new ChannelsSeeder(),
                               new VideosSeeder(),
                           };
 

@@ -172,7 +172,7 @@ namespace PlayZone.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("ChanelId")
+                    b.Property<string>("ChannelId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -279,7 +279,7 @@ namespace PlayZone.Data.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("PlayZone.Data.Models.Chanel", b =>
+            modelBuilder.Entity("PlayZone.Data.Models.Channel", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -316,7 +316,7 @@ namespace PlayZone.Data.Migrations
                         .IsUnique()
                         .HasFilter("[UserId] IS NOT NULL");
 
-                    b.ToTable("Chanels");
+                    b.ToTable("Channels");
                 });
 
             modelBuilder.Entity("PlayZone.Data.Models.Comment", b =>
@@ -400,7 +400,7 @@ namespace PlayZone.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ChanelId")
+                    b.Property<string>("ChannelId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CloudinaryPublicId")
@@ -468,7 +468,7 @@ namespace PlayZone.Data.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ChanelId")
+                    b.Property<string>("ChannelId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -503,7 +503,7 @@ namespace PlayZone.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("ChanelId");
+                    b.HasIndex("ChannelId");
 
                     b.HasIndex("IsDeleted");
 
@@ -627,11 +627,11 @@ namespace PlayZone.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PlayZone.Data.Models.Chanel", b =>
+            modelBuilder.Entity("PlayZone.Data.Models.Channel", b =>
                 {
                     b.HasOne("PlayZone.Data.Models.ApplicationUser", "User")
-                        .WithOne("Chanel")
-                        .HasForeignKey("PlayZone.Data.Models.Chanel", "UserId");
+                        .WithOne("Channel")
+                        .HasForeignKey("PlayZone.Data.Models.Channel", "UserId");
                 });
 
             modelBuilder.Entity("PlayZone.Data.Models.Comment", b =>
@@ -666,7 +666,7 @@ namespace PlayZone.Data.Migrations
 
             modelBuilder.Entity("PlayZone.Data.Models.Image", b =>
                 {
-                    b.HasOne("PlayZone.Data.Models.Chanel", "Chanel")
+                    b.HasOne("PlayZone.Data.Models.Channel", "Channel")
                         .WithOne("Image")
                         .HasForeignKey("PlayZone.Data.Models.Image", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -681,9 +681,9 @@ namespace PlayZone.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("PlayZone.Data.Models.Chanel", "Chanel")
+                    b.HasOne("PlayZone.Data.Models.Channel", "Channel")
                         .WithMany("Videos")
-                        .HasForeignKey("ChanelId")
+                        .HasForeignKey("ChannelId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

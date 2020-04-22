@@ -18,8 +18,8 @@
             <a class="text-dark" asp-controller="Videos" asp-action="Details" asp-route-id="@video.VideoId">
                 <h5>@video.VideoTitle</h5>
             </a>
-            <a class="text-dark" asp-controller="Chanels" asp-action="Details" asp-route-id="@video.VideoChanelId">
-                <p>Chanel: @video.VideoChanelTitle</p>
+            <a class="text-dark" asp-controller="channels" asp-action="Details" asp-route-id="@video.VideoChannelId">
+                <p>channel: @video.VideoChannelTitle</p>
             </a>
             <br />
             <p>@video.ShortDescription</p>

@@ -22,7 +22,7 @@
         [MaxLength(6000, ErrorMessage = "Length cannot be longer than 6000 characters!")]
         public string Description { get; set; }
 
-        
+        [Range(1, int.MaxValue)]
         [Display(Name = "Categories")]
         public int CategoryId { get; set; }
 
@@ -31,6 +31,5 @@
         public string ExistingTitle { get; set; }
 
         public string ExistingUrl { get; set; }
-
     }
 }

@@ -12,28 +12,28 @@
     using PlayZone.Data.Models;
     using PlayZone.Services.Mapping;
 
-    public class ChanelsService : IChanelsService
+    public class ChannelsService : IChannelsService
     {
-        private readonly IDeletableEntityRepository<Chanel> chanelRepository;
+        private readonly IDeletableEntityRepository<Channel> channelRepository;
         private readonly IDeletableEntityRepository<Image> imageRepository;
         private readonly IDeletableEntityRepository<PlayZone.Data.Models.Video> videoReposiroty;
         private readonly Cloudinary cloudinary;
 
-        public ChanelsService(
-            IDeletableEntityRepository<Chanel> chanelRepository,
+        public ChannelsService(
+            IDeletableEntityRepository<Channel> channelRepository,
             IDeletableEntityRepository<Image> imageRepository,
             IDeletableEntityRepository<PlayZone.Data.Models.Video> videoReposiroty,
             Cloudinary cloudinary)
         {
-            this.chanelRepository = chanelRepository;
+            this.channelRepository = channelRepository;
             this.imageRepository = imageRepository;
             this.videoReposiroty = videoReposiroty;
             this.cloudinary = cloudinary;
         }
 
-        public bool IsValidChanel(string title)
+        public bool IsValidChannel(string title)
         {
-            if (this.chanelRepository.All().Any(c => c.Title == title))
+            if (this.channelRepository.All().Any(c => c.Title == title))
             {
                 return false;
             }
@@ -41,26 +41,26 @@
             return true;
         }
 
-        public async Task<string> CreateChanelAsync(string title, string description, ApplicationUser user)
+        public async Task<string> CreateChannelAsync(string title, string description, ApplicationUser user)
         {
-            var chanel = new Chanel
+            var channel = new Channel
             {
                 Title = title,
                 Description = description,
                 UserId = user.Id,
             };
 
-            user.ChanelId = chanel.Id;
+            user.ChannelId = channel.Id;
 
-            await this.chanelRepository.AddAsync(chanel);
-            await this.chanelRepository.SaveChangesAsync();
+            await this.channelRepository.AddAsync(channel);
+            await this.channelRepository.SaveChangesAsync();
 
-            return chanel.Id;
+            return channel.Id;
         }
 
         public async Task UploadAsync(IFormFile file, string id)
         {
-            var currentImage = this.imageRepository.All().FirstOrDefault(c => c.ChanelId == id);
+            var currentImage = this.imageRepository.All().FirstOrDefault(c => c.ChannelId == id);
 
             if (currentImage != null)
             {
@@ -91,41 +91,41 @@
             var imageUrl = result.Uri.AbsoluteUri.Replace("http://res.cloudinary.com/dqh6dvohu/image/upload/", string.Empty);
             var publicId = result.PublicId;
 
-            var currentChanel = this.chanelRepository.All().Where(c => c.Id == id).FirstOrDefault();
+            var currentChannel = this.channelRepository.All().Where(c => c.Id == id).FirstOrDefault();
 
-            await this.CreateImage(imageUrl, publicId, currentChanel);
+            await this.CreateImage(imageUrl, publicId, currentChannel);
         }
 
-        public T GetChanelById<T>(string id)
+        public T GetChannelById<T>(string id)
         {
-            var chanel = this.chanelRepository.All()
+            var channel = this.channelRepository.All()
                 .Where(c => c.Id == id).To<T>()
                 .FirstOrDefault();
 
-            return chanel;
+            return channel;
         }
 
-        public async Task CreateImage(string url, string cloudinaryPublicId, Chanel currentChanel)
+        public async Task CreateImage(string url, string cloudinaryPublicId, Channel currentChannel)
         {
             var image = new Image
             {
                 Url = url,
                 CloudinaryPublicId = cloudinaryPublicId,
-                ChanelId = currentChanel.Id,
-                Chanel = currentChanel,
+                ChannelId = currentChannel.Id,
+                Channel = currentChannel,
             };
 
             await this.imageRepository.AddAsync(image);
 
-            currentChanel.ImageId = image.Id;
+            currentChannel.ImageId = image.Id;
 
             await this.imageRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<T> GetVieosByChanel<T>(string id, int? take, int skip = 0)
+        public IEnumerable<T> GetVieosByChannel<T>(string id, int? take, int skip = 0)
         {
             var videos = this.videoReposiroty.All()
-                .Where(v => v.ChanelId == id)
+                .Where(v => v.ChannelId == id)
                 .OrderByDescending(v => v.CreatedOn)
                 .Skip(skip);
 
@@ -134,16 +134,16 @@
                          .ToList();
         }
 
-        public int GetAllVideosByChanelCount(string id)
+        public int GetAllVideosByChannelCount(string id)
         {
             return this.videoReposiroty.All()
-                 .Where(c => c.ChanelId == id)
+                 .Where(c => c.ChannelId == id)
                  .Count();
         }
 
-        public bool IsOwner(string chanelId, string userChanelId)
+        public bool IsOwner(string channelId, string userChannelId)
         {
-            if (userChanelId == chanelId)
+            if (userChannelId == channelId)
             {
                 return true;
             }
@@ -151,28 +151,28 @@
             return false;
         }
 
-        public async Task EditChanelAsync(string id, string title, string description)
+        public async Task EditChannelAsync(string id, string title, string description)
         {
-            var chanel = this.chanelRepository.All()
+            var channel = this.channelRepository.All()
                 .Where(c => c.Id == id)
                 .FirstOrDefault();
 
-            if (chanel != null)
+            if (channel != null)
             {
-                chanel.Title = title;
-                chanel.Description = description;
+                channel.Title = title;
+                channel.Description = description;
             }
 
-            await this.chanelRepository.SaveChangesAsync();
+            await this.channelRepository.SaveChangesAsync();
         }
 
-        public bool IsValidChaneAfterEdit(string chanelId, string title)
+        public bool IsValidChaneAfterEdit(string channelId, string title)
         {
-            var chanels = this.chanelRepository.All()
-                .Where(c => c.Id != chanelId)
+            var channels = this.channelRepository.All()
+                .Where(c => c.Id != channelId)
                 .ToList();
 
-            if (chanels.Any(c => c.Title == title))
+            if (channels.Any(c => c.Title == title))
             {
                 return false;
             }

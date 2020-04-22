@@ -1,4 +1,4 @@
-﻿@model PlayZone.Web.ViewModels.Chanels.ChanelDetailsViewModel
+﻿@model PlayZone.Web.ViewModels.Channels.ChannelDetailsViewModel
 @{
     ViewData["Title"] = "Details";
 }
@@ -10,7 +10,7 @@
         <div class="container">
             <div>
 
-                <img src="@Model.EmbedChanelImageUrl" class="img-fluid">
+                <img src="@Model.EmbedChannelImageUrl" class="img-fluid">
             </div>
         </div>
     }
@@ -32,9 +32,9 @@
     {
         <div class="row justify-content-center">
 
-            <a class="col-md-2 text-center btn btn-primary mr-1 mt-1" asp-controller="Chanels" asp-action="ImageUpload" asp-route-id="@Model.Id">Change Image</a>
+            <a class="col-md-2 text-center btn btn-primary mr-1 mt-1" asp-controller="channels" asp-action="ImageUpload" asp-route-id="@Model.Id">Change Image</a>
 
-            <a class="col-md-2 text-center btn btn-primary mr-1 mt-1" asp-controller="Chanels" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+            <a class="col-md-2 text-center btn btn-primary mr-1 mt-1" asp-controller="channels" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
         </div>
     }
     <br />
@@ -45,8 +45,8 @@
     <hr />
     <div class="row d-flex justify-content-center">
 
-        <a class="col-md-2 text-center btn btn-primary mr-1 mt-1" asp-controller="Chanels" asp-action="Videos" asp-route-id="@Model.Id">Videos</a>
-        <a class="col-md-2 text-center btn btn-primary mr-1 mt-1" asp-controller="Chanels" asp-action="Description" asp-route-id="@Model.Id">Description</a>
+        <a class="col-md-2 text-center btn btn-primary mr-1 mt-1" asp-controller="Channels" asp-action="Videos" asp-route-id="@Model.Id">Videos</a>
+        <a class="col-md-2 text-center btn btn-primary mr-1 mt-1" asp-controller="Channels" asp-action="Description" asp-route-id="@Model.Id">Description</a>
         @if (Model.IsCreator)
         {
             <a class="col-md-2 text-center btn btn-primary mr-1 mt-1" asp-controller="Videos" asp-action="Create" asp-route-id="@Model.Id">Add Video</a>

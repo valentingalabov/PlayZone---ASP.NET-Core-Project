@@ -15,8 +15,8 @@
 
         public string CloudinaryPublicId { get; set; }
 
-        public string ChanelId { get; set; }
+        public string ChannelId { get; set; }
 
-        public virtual Chanel Chanel { get; set; }
+        public virtual Channel Channel { get; set; }
     }
 }

@@ -79,7 +79,7 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
             services.AddTransient<IVideosService, VideosService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
-            services.AddTransient<IChanelsService, ChanelsService>();
+            services.AddTransient<IChannelsService, ChannelsService>();
             services.AddTransient<IHistoriesService, HistoriesService>();
             services.AddTransient<IFavoritesServices, FavoritesService>();
             services.AddTransient<IVotesService, VotesService>();

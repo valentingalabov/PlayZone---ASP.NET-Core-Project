@@ -31,7 +31,7 @@
 
         public DbSet<Category> Categories { get; set; }
 
-        public DbSet<Chanel> Chanels { get; set; }
+        public DbSet<Channel> Channels { get; set; }
 
         public DbSet<Image> Images { get; set; }
 

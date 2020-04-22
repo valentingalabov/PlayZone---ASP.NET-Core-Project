@@ -33,9 +33,9 @@
         public string UserId { get; set; }
 
         [Required]
-        public string ChanelId { get; set; }
+        public string ChannelId { get; set; }
 
-        public virtual Chanel Chanel { get; set; }
+        public virtual Channel Channel { get; set; }
 
         public virtual ApplicationUser User { get; set; }
 

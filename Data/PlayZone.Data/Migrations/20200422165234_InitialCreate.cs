@@ -49,7 +49,7 @@
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    ChanelId = table.Column<string>(nullable: true),
+                    ChannelId = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -74,7 +74,7 @@
                     table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
-            _ = migrationBuilder.CreateTable(
+            migrationBuilder.CreateTable(
                 name: "Settings",
                 columns: table => new
                 {
@@ -89,7 +89,7 @@
                 },
                 constraints: table =>
                 {
-                    _ = table.PrimaryKey("PK_Settings", x => x.Id);
+                    table.PrimaryKey("PK_Settings", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -113,7 +113,7 @@
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            _ = migrationBuilder.CreateTable(
+            migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
@@ -199,7 +199,7 @@
                 });
 
             migrationBuilder.CreateTable(
-                name: "Chanels",
+                name: "Channels",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -214,9 +214,9 @@
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Chanels", x => x.Id);
+                    table.PrimaryKey("PK_Channels", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Chanels_AspNetUsers_UserId",
+                        name: "FK_Channels_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -234,15 +234,15 @@
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     Url = table.Column<string>(nullable: true),
                     CloudinaryPublicId = table.Column<string>(nullable: true),
-                    ChanelId = table.Column<string>(nullable: true),
+                    ChannelId = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Images", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Images_Chanels_Id",
+                        name: "FK_Images_Channels_Id",
                         column: x => x.Id,
-                        principalTable: "Chanels",
+                        principalTable: "Channels",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -261,7 +261,7 @@
                     Description = table.Column<string>(nullable: true),
                     CategoryId = table.Column<int>(nullable: false),
                     UserId = table.Column<string>(nullable: false),
-                    ChanelId = table.Column<string>(nullable: false),
+                    ChannelId = table.Column<string>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -273,9 +273,9 @@
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Videos_Chanels_ChanelId",
-                        column: x => x.ChanelId,
-                        principalTable: "Chanels",
+                        name: "FK_Videos_Channels_ChannelId",
+                        column: x => x.ChannelId,
+                        principalTable: "Channels",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -296,13 +296,20 @@
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    Body = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: true),
                     VideoId = table.Column<string>(nullable: true),
+                    ParentId = table.Column<int>(nullable: true),
+                    Content = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_Comments_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "Comments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Comments_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -459,13 +466,13 @@
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Chanels_IsDeleted",
-                table: "Chanels",
+                name: "IX_Channels_IsDeleted",
+                table: "Channels",
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Chanels_UserId",
-                table: "Chanels",
+                name: "IX_Channels_UserId",
+                table: "Channels",
                 column: "UserId",
                 unique: true,
                 filter: "[UserId] IS NOT NULL");
@@ -474,6 +481,11 @@
                 name: "IX_Comments_IsDeleted",
                 table: "Comments",
                 column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_ParentId",
+                table: "Comments",
+                column: "ParentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_UserId",
@@ -521,9 +533,9 @@
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Videos_ChanelId",
+                name: "IX_Videos_ChannelId",
                 table: "Videos",
-                column: "ChanelId");
+                column: "ChannelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Videos_IsDeleted",
@@ -591,7 +603,7 @@
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Chanels");
+                name: "Channels");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

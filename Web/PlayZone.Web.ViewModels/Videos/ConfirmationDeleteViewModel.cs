@@ -9,7 +9,7 @@
 
         public string Title { get; set; }
 
-        public string ChanelTitle { get; set; }
+        public string ChannelTitle { get; set; }
 
         public string Url { get; set; }
 
