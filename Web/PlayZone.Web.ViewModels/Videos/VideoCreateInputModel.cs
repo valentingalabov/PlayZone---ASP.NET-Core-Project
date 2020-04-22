@@ -26,5 +26,9 @@
         public int CategoryId { get; set; }
 
         public IEnumerable<CategoryDropDownViewModel> Categories { get; set; }
+
+        public string ExsistingUrl { get; set; }
+
+        public string ExistingTitle { get; set; }
     }
 }

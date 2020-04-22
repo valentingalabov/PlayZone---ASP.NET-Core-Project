@@ -40,9 +40,15 @@
                 return this.RedirectToAction("Details", new { Id = user.ChanelId });
             }
 
-            if (!this.ModelState.IsValid || !this.chanelsService.IsValidChanel(input.Title))
+            if (!this.ModelState.IsValid)
             {
                 return this.View(input);
+            }
+
+            if (!this.chanelsService.IsValidChanel(input.Title))
+            {
+                input.ExistTitle = "This chanel title already exist!";
+                return this.View();
             }
 
             var chanelId = await this.chanelsService.CreateChanelAsync(input.Title, input.Description, user);
@@ -135,8 +141,14 @@
         [HttpPost]
         public async Task<IActionResult> Edit(ChanelEditInputModel input)
         {
-            if (!this.ModelState.IsValid || !this.chanelsService.IsValidChaneAfterEdit(input.Id, input.Title))
+            if (!this.ModelState.IsValid)
             {
+                return this.View(input);
+            }
+
+            if (!this.chanelsService.IsValidChaneAfterEdit(input.Id, input.Title))
+            {
+                input.ExistTitle = "This chanel title already exist!";
                 return this.View(input);
             }
 

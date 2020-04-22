@@ -13,12 +13,21 @@
                 <label asp-for="Title"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
+                @if (Model.ExistingTitle != null)
+                {
+                    <span class="text-danger">@Model.ExistingTitle</span>
+                }
+
             </div>
 
             <div>
                 <label asp-for="Url"></label>
                 <input asp-for="Url" class="form-control" />
                 <span asp-validation-for="Url" class="text-danger"></span>
+                @if (Model.ExsistingUrl != null)
+                {
+                <span class="text-danger">@Model.ExsistingUrl</span>
+                }
             </div>
 
             <div>

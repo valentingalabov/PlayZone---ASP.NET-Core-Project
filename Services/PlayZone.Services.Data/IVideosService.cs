@@ -17,9 +17,13 @@
 
         string GetShortUrl(string url);
 
-        bool IsValidVideoAfterEdit(string id, string title, string url);
+        bool IsValidUrlAfterEdit(string id, string url);
 
-        bool IsValidVideo(string title, string url);
+        bool IsValidTitleAfterEdit(string id, string title);
+
+        bool IsValidTitle(string title);
+
+        bool IsValidUrl(string url);
 
         bool IsOwner(string videoId, string userId);
 

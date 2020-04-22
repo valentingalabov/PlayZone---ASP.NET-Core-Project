@@ -51,13 +51,22 @@
                 return this.Redirect("/Chanels/Create");
             }
 
-            if (!this.videosService.IsValidVideo(input.Title, input.Url))
-            {
-                return this.View("Title and Url must be Unique!");
-            }
-
             if (!this.ModelState.IsValid)
             {
+                return this.View(input);
+            }
+
+            if (!this.videosService.IsValidTitle(input.Title))
+            {
+                input.Categories = this.categoriesService.GetAllCategories<CategoryDropDownViewModel>();
+                input.ExistingTitle = "This title already exist!";
+                return this.View(input);
+            }
+
+            if (!this.videosService.IsValidUrl(input.Url))
+            {
+                input.Categories = this.categoriesService.GetAllCategories<CategoryDropDownViewModel>();
+                input.ExsistingUrl = "This url already exist!";
                 return this.View(input);
             }
 
@@ -111,11 +120,24 @@
         [HttpPost]
         public async Task<IActionResult> Edit(VideoEditInputModel input)
         {
-            if (
-                   !this.ModelState.IsValid
-                   || !this.videosService.IsValidVideoAfterEdit(input.Id, input.Title, input.Url))
+            if (!this.ModelState.IsValid)
             {
-                return this.RedirectToAction("Edit", new { Id = input.Id });
+                return this.View(input);
+            }
+
+            if (!this.videosService.IsValidTitleAfterEdit(input.Id, input.Title))
+            {
+                input.Categories = this.categoriesService.GetAllCategories<CategoryDropDownViewModel>();
+                input.ExistingTitle = "This title already exist!";
+
+                return this.View(input);
+            }
+
+            if (!this.videosService.IsValidUrlAfterEdit(input.Id, input.Url))
+            {
+                input.Categories = this.categoriesService.GetAllCategories<CategoryDropDownViewModel>();
+                input.ExistingUrl = "This url already exist!";
+                return this.View(input);
             }
 
             await this.videosService.EditVideoAsync(input.Id, input.Title, input.Url, input.Description, input.CategoryId);

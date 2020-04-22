@@ -5,7 +5,7 @@
     public class ChanelCreateInputModel
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "Title is Required!")]
-        [MaxLength(60, ErrorMessage = "Length cannot be longer than 60 characters!")]
+        [MaxLength(30, ErrorMessage = "Length cannot be longer than 30 characters!")]
         [MinLength(4, ErrorMessage = "Length cannot be shorter than 4 characters!")]
         public string Title { get; set; }
 
@@ -13,5 +13,7 @@
         public string Description { get; set; }
 
         public string UserId { get; set; }
+
+        public string ExistTitle { get; set; }
     }
 }

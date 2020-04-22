@@ -97,17 +97,6 @@
             }
         }
 
-        public bool IsValidVideoAfterEdit(string id, string title, string url)
-        {
-            var videos = this.videosRepository.All().Where(v => v.Id != id).ToList();
-
-            if (videos.Any(v => v.Title == title || v.Url == this.GetShortUrl(url)))
-            {
-                return false;
-            }
-
-            return true;
-        }
 
         public string GetShortUrl(string url)
         {
@@ -124,6 +113,52 @@
             }
 
             await this.videosRepository.SaveChangesAsync();
+        }
+
+        public bool IsValidUrlAfterEdit(string id, string url)
+        {
+            var videos = this.videosRepository.All().Where(v => v.Id != id).ToList();
+
+            if (videos.Any(v => v.Url == this.GetShortUrl(url)))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool IsValidTitleAfterEdit(string id, string title)
+        {
+            var videos = this.videosRepository.All().Where(v => v.Id != id).ToList();
+
+            if (videos.Any(v => v.Title == title))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool IsValidTitle(string title)
+        {
+            if (this.videosRepository.All()
+                  .Any(v => v.Title == title))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool IsValidUrl(string url)
+        {
+            if (this.videosRepository.All()
+                 .Any(v => v.Url == this.GetShortUrl(url)))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

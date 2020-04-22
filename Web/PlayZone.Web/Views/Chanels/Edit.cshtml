@@ -8,9 +8,13 @@
 <div class="pagination-centered">
     <form method="post" asp-controller="Chanels" asp-action="Edit">
         <div>
-            <label asp-for="Title" ></label>
-            <input asp-for="Title" class="form-control"  value="@Model.Title"/>
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control" value="@Model.Title" />
             <span asp-validation-for="Title" class="text-danger"></span>
+            @if (Model.ExistTitle != null)
+            {
+                <span class="text-danger">@Model.ExistTitle</span>
+            }
         </div>
 
 
