@@ -41,6 +41,16 @@
             return this.View(viewModel);
         }
 
+        public IActionResult HttpError(string statusCode)
+        {
+            if (statusCode == "404")
+            {
+                return this.View("404", statusCode);
+            }
+
+            return this.View("Error");
+        }
+
         public IActionResult Privacy()
         {
             return this.View();
