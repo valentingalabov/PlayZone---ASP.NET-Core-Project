@@ -30,7 +30,18 @@
 
         public string EmbedVideoUrl => $"https://www.youtube.com/embed/{this.Url}";
 
-        public string EmbedChannelImageUrl => $"https://res.cloudinary.com/dqh6dvohu/image/upload/w_100,c_fill,ar_1:1,g_auto,r_max,bo_2px_solid_blue,b_rgb:ffffff/{this.ChannelImageUrl}";
+        public string EmbedChannelImageUrl
+        {
+            get
+            {
+                if (this.ChannelImageUrl == null)
+                {
+                    return $"http://res.cloudinary.com/dqh6dvohu/image/upload/w_50,c_fill,ar_1:1,g_auto,r_max,bo_2px_solid_blue,b_rgb:ffffff/v1587638519/123_hmchqe.jpg";
+                }
+
+                return $"http://res.cloudinary.com/dqh6dvohu/image/upload/w_50,c_fill,ar_1:1,g_auto,r_max,bo_2px_solid_blue,b_rgb:ffffff/{this.ChannelImageUrl}";
+            }
+        }
 
         public DateTime CreatedOn { get; set; }
 

@@ -28,12 +28,14 @@
                     <a asp-controller="Videos" asp-action="Details" asp-route-id="@video.Id"><h4 class="card-title"><strong>@video.Title</strong></h4></a>
                     <hr />
                     <div class="row">
+
                         <div class="col-md-3">
-                            <a asp-controller="Channels" asp-action="Details" asp-route-id="@video.ChannelId"><img src="@video.EmbedChannelImageUrl" /></a>
+                            <a asp-controller="Channels" asp-action="Details" asp-route-id="@video.ChannelId"><img width="50" height="50" src="@video.EmbedChannelImageUrl" /></a>
                         </div>
+
                         <div class="col-md-9">
                             <p class="card-text">
-                                channel: @video.ChannelTitle
+                                Channel:<a asp-controller="Channels" asp-action="Details" asp-route-id="@video.ChannelId"> @video.ChannelTitle</a>
                             </p>
                         </div>
                     </div>

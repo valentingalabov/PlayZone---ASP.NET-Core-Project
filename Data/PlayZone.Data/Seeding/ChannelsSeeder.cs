@@ -1,6 +1,7 @@
 ﻿namespace PlayZone.Data.Seeding
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -15,18 +16,36 @@
                 return;
             }
 
-            var videos = dbContext.Videos.ToList();
-            var user = dbContext.Users.FirstOrDefault();
-            var channel = new Channel
+            var user1 = dbContext.Users.FirstOrDefault(u => u.UserName == "admin@abv.bg");
+            var user2 = dbContext.Users.FirstOrDefault(u => u.UserName == "demo@abv.bg");
+            var user3 = dbContext.Users.FirstOrDefault(u => u.UserName == "play@abv.bg");
+
+            var channel = new List<Channel>()
             {
-                Title = "EnduroVideochannel",
-                UserId = user.Id,
-                Description = "This is channel with Enduro Content!",
-                Videos = videos,
+                new Channel
+                {
+                Title = "AD Channel",
+                UserId = user1.Id,
+                Description = "This is channel with ad Content!",
+                },
+
+                new Channel
+                {
+                Title = "Motorsport",
+                UserId = user2.Id,
+                Description = "This is channel with Cars",
+                },
+
+                new Channel
+                {
+                Title = "Gaming Channel",
+                UserId = user3.Id,
+                Description = "This is channel with Gaming!",
+                },
             };
 
-            await dbContext.Channels.AddAsync(channel);
-            user.ChannelId = channel.Id;
+            await dbContext.Channels.AddRangeAsync(channel);
+            await dbContext.SaveChangesAsync();
         }
     }
 }

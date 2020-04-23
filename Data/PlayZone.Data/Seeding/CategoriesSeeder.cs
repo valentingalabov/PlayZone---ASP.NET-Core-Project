@@ -20,7 +20,8 @@
             {
                 "Funny", "Sport",
                 " Hobby", "Motosport",
-                "Movie", "Music",
+                "Movie", "Music", "Inspiration",
+                "Education",
             };
 
             foreach (var category in categoriesToCreate)

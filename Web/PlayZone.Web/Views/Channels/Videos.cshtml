@@ -31,11 +31,11 @@
                     <hr />
                     <div class="row">
                         <div class="col-md-3">
-                            <a asp-controller="Channels" asp-action="Details" asp-route-id="@video.ChannelId"><img src="@video.EmbedChannelImageUrl" /></a>
+                            <a asp-controller="Channels" asp-action="Details" asp-route-id="@video.ChannelId"><img height="50" width="50" src="@video.EmbedChannelImageUrl" /></a>
                         </div>
                         <div class="col-md-9">
                             <p class="card-text">
-                                channel: @video.ChannelTitle
+                                Channel:<a asp-controller="Channels" asp-action="Details" asp-route-id="@video.ChannelId"> @video.ChannelTitle </a>
                             </p>
                         </div>
                     </div>

@@ -5,28 +5,12 @@
 
 <div class="text-center">
 
-    @if (Model.ImageUrl != null)
-    {
-        <div class="container">
-            <div>
-
-                <img src="@Model.EmbedChannelImageUrl" class="img-fluid">
+        <div class="d-flex justify-content-center">
+            <div class="row">
+                <img  src="@Model.EmbedChannelImageUrl" class="img-fluid">
             </div>
         </div>
-    }
-    else
-    {
 
-        <form class="md-form">
-            <div class="file-field">
-                <div class="z-depth-1-half mb-4">
-                    <img src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg" width="958" height="339" class="img-fluid"
-                         alt="example placeholder">
-                </div>
-
-            </div>
-        </form>
-    }
 
     @if (Model.IsCreator)
     {

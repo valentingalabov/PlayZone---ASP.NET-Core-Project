@@ -69,27 +69,31 @@
 
 
     <div class="col-md-7">
+        
         <div class="container row">
-            <div class="border col-md-1 text-center">
-                <form id="votesForm" method="post"></form>
-                <div class="">
-                    <a href="#votesForm" onclick="sendVote('@Model.Id', true)">
-                        <i class="fa fa-thumbs-up"></i>
-                    </a>
-                </div>
-                <div class="" id="upVotesCount">@Model.UpVotesCount</div>
-                <div class="">
-                    <a href="#votesForm" onclick="sendVote('@Model.Id', false)">
-                        <i class="fa fa-thumbs-down"></i>
-                    </a>
-                </div>
+            @if (this.User != null)
+            {
+                <div class="border col-md-1 text-center">
+                    <form id="votesForm" method="post"></form>
+                    <div class="">
+                        <a href="#votesForm" onclick="sendVote('@Model.Id', true)">
+                            <i class="fa fa-thumbs-up"></i>
+                        </a>
+                    </div>
+                    <div class="" id="upVotesCount">@Model.UpVotesCount</div>
+                    <div class="">
+                        <a href="#votesForm" onclick="sendVote('@Model.Id', false)">
+                            <i class="fa fa-thumbs-down"></i>
+                        </a>
+                    </div>
 
-                <div class="" id="downVotesCount">@Model.DownVotesCount</div>
-            </div>
-            <div class="col-md-3 border text-center">
-                <p>Add to Favorites:</p>
-                <a asp-controller="Favorites" asp-action="AddVideoToFavorites" asp-route-id="@Model.Id"><i class="fas fa-heart"></i></a>
-            </div>
+                    <div class="" id="downVotesCount">@Model.DownVotesCount</div>
+                </div>
+                <div class="col-md-3 border text-center">
+                    <p>Add to Favorites:</p>
+                    <a asp-controller="Favorites" asp-action="AddVideoToFavorites" asp-route-id="@Model.Id"><i class="fas fa-heart"></i></a>
+                </div>
+            }
             <div class="col-md-3 border text-center">
                 <p>Created On: <time datetime="@Model.CreatedOn.ToString("O")"></time></p>
             </div>
@@ -138,7 +142,7 @@
 </div>
 
 
-@section Scripts {   
+@section Scripts {
 
     <script>
         function showAddCommentForm(parentId) {
