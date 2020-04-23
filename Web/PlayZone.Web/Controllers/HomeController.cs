@@ -2,7 +2,6 @@
 {
     using System;
     using System.Diagnostics;
-    using System.Linq;
 
     using Microsoft.AspNetCore.Mvc;
     using PlayZone.Services.Data;
@@ -45,7 +44,7 @@
         {
             if (statusCode == "404")
             {
-                return this.View("404", statusCode);
+                return this.View("404");
             }
 
             return this.View("Error");

@@ -23,9 +23,14 @@
         {
             get
             {
-                return this.VideoDescription.Length > 150
-                        ? this.VideoDescription.Substring(0, 150) + "..."
-                        : this.VideoDescription;
+                if (this.VideoDescription != null)
+                {
+                    return this.VideoDescription.Length > 150
+                       ? this.VideoDescription.Substring(0, 150) + "..."
+                       : this.VideoDescription;
+                }
+
+                return null;
             }
         }
 
