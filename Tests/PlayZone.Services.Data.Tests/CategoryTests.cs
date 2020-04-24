@@ -37,7 +37,7 @@
 
             var categories = service.GetAllCategories<CategoryDropDownViewModel>();
 
-            Assert.Equal("Music", categories.Select(c => c.Name).FirstOrDefault());
+            Assert.Single(categories);
         }
     }
 }
