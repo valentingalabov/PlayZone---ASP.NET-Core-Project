@@ -32,7 +32,6 @@
             Assert.False(service.IsValidChannel("Enduro"));
         }
 
-
         public Channel CreateChannel()
         {
             return new Channel
