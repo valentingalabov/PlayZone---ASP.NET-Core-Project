@@ -3,16 +3,18 @@
     ViewData["Title"] = "ConfirmationDelete";
 }
     <div class="text-center">
-        <div class="row">
-            <h3>Title: @Model.Title</h3>
+        <div class="row" >
+            <h3 class="col-md-12">Title: @Model.Title</h3>
         </div>
-        <div class="embed-responsive-16by9">
-            <iframe  width="560" height="315" src="@Model.EmbeddUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe  class="embed-responsive-item" src="@Model.EmbeddUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
         <hr />
-        <h1 class="row">Are you shure you want to delete video?</h1>
+        <div class="row">
+            <h1 class="col-md-12">Are you shure you want to delete video?</h1>
+        </div>
         <div class="row justify-content-center">
-            <a class="brn btn-danger btn-lg col-lg-1 mr-2" asp-controller="Videos" asp-action="Delete" asp-route-id="@Model.Id">Yes</a>
-            <a class="brn btn-primary btn-lg col-lg-1 mr-2" asp-controller="Videos" asp-action="Details" asp-route-id="@Model.Id">No</a>
+            <a class="brn btn-danger btn-lg col-md-4 mr-2 mt-2" asp-controller="Videos" asp-action="Delete" asp-route-id="@Model.Id">Yes</a>
+            <a class="brn btn-primary btn-lg col-md-4 mr-2 mt-2" asp-controller="Videos" asp-action="Details" asp-route-id="@Model.Id">No</a>
         </div>
     </div>
