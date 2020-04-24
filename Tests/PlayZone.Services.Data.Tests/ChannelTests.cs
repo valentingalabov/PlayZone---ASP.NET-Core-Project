@@ -15,7 +15,6 @@
         [Fact]
         public async Task IsValidChanelTest()
         {
-
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString());
 
@@ -43,7 +42,5 @@
                 UserId = null,
             };
         }
-
-
     }
 }
