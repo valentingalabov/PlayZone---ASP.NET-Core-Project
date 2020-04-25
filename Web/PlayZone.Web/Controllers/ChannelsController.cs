@@ -146,7 +146,7 @@
                 return this.View(input);
             }
 
-            if (!this.channelsService.IsValidChaneAfterEdit(input.Id, input.Title))
+            if (!this.channelsService.IsValidChannelAfterEdit(input.Id, input.Title))
             {
                 input.ExistTitle = "This channel title already exist!";
                 return this.View(input);

@@ -12,7 +12,7 @@
 
         bool IsValidChannel(string title);
 
-        bool IsValidChaneAfterEdit(string channelId, string title);
+        bool IsValidChannelAfterEdit(string channelId, string title);
 
         Task UploadAsync(IFormFile file, string id);
 

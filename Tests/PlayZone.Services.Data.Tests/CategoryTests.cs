@@ -1,7 +1,6 @@
 ﻿namespace PlayZone.Services.Data.Tests
 {
     using System;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
@@ -18,6 +17,8 @@
         [Fact]
         public async Task GetAllCategoriesTest()
         {
+            AutoMapperConfig.RegisterMappings(typeof(CategoryDropDownViewModel).Assembly);
+
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString());
 
@@ -28,10 +29,8 @@
                 Name = "Music",
                 Description = "music Description",
             });
-
+    
             await repository.SaveChangesAsync();
-
-            AutoMapperConfig.RegisterMappings(typeof(CategoryDropDownViewModel).Assembly);
 
             var service = new CategoriesService(repository);
 

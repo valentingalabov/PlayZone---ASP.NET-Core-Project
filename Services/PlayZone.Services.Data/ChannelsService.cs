@@ -166,7 +166,7 @@
             await this.channelRepository.SaveChangesAsync();
         }
 
-        public bool IsValidChaneAfterEdit(string channelId, string title)
+        public bool IsValidChannelAfterEdit(string channelId, string title)
         {
             var channels = this.channelRepository.All()
                 .Where(c => c.Id != channelId)

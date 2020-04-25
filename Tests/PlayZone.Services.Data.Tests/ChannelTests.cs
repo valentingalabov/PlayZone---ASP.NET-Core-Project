@@ -43,12 +43,14 @@
 
             this.user = new ApplicationUser
             {
+                Id = "user-id",
                 UserName = "asd@abv.bg",
                 Email = "asd@abv.bg",
             };
 
             this.channel1 = new Channel
             {
+                Id = "first-id",
                 Title = "Enduro",
                 Description = "Desc of channel",
                 Image = null,
@@ -57,6 +59,7 @@
 
             this.channel2 = new Channel
             {
+                Id = "second-id",
                 Title = "Music",
                 Description = "Music desc",
                 Image = null,
@@ -69,8 +72,8 @@
         {
             await this.AddChannelsToRepository();
 
-            Assert.False(this.service.IsValidChannel(this.channel1.Title));
-            Assert.True(this.service.IsValidChannel("Valid"));
+            Assert.True(this.service.IsValidChannel("Random title"));
+            Assert.False(this.service.IsValidChannel("Enduro"));
         }
 
         [Fact]
@@ -98,11 +101,10 @@
 
             AutoMapperConfig.RegisterMappings(typeof(ChannelDescriptionViewModel).Assembly);
 
-            var expectedChanel = this.channelRepository.All().To<ChannelDescriptionViewModel>().FirstOrDefault(c => c.Title == this.channel1.Title);
-
+            var expected = this.channelRepository.All().To<ChannelDescriptionViewModel>().Where(c => c.Id == this.channel1.Id).FirstOrDefault();
             var result = this.service.GetChannelById<ChannelDescriptionViewModel>(this.channel1.Id);
 
-            Assert.Equal(expectedChanel.Id, result.Id);
+            Assert.Equal(expected.Title, result.Title);
         }
 
         [Fact]
@@ -136,44 +138,80 @@
                 ChannelId = this.channel1.Id,
             });
 
+            await this.videoRepository.SaveChangesAsync();
+
             AutoMapperConfig.RegisterMappings(typeof(VideoByChannelViewModel).Assembly);
 
             var result = this.service.GetVieosByChannel<VideoByChannelViewModel>(this.channel1.Id, 5);
 
-            var expectedVideos = this.videoRepository.All();
+            var expectedVideos = this.videoRepository.All().To<VideoByChannelViewModel>();
 
-            Assert.Equal(expectedVideos.Count(), result.Count());
+            Assert.Equal(expectedVideos, result);
         }
 
         [Fact]
         public async Task GetAllVideosByChannelCountTest()
         {
-            await this.AddChannelsToRepository();
+            await this.channelRepository.AddAsync(this.channel1);
+
+            await this.channelRepository.SaveChangesAsync();
 
             await this.videoRepository.AddAsync(new Video
             {
+                Id = "first-Id",
                 Title = "Video",
                 Description = "video description",
                 Url = "https://youtube.com//",
                 UserId = this.user.Id,
                 ChannelId = this.channel1.Id,
-                Channel = this.channel1,
             });
 
             await this.videoRepository.AddAsync(new Video
             {
+                Id = "Second-id",
                 Title = "newVideo",
                 Description = "video description",
                 Url = "https://youtube.comasdaasf//",
                 UserId = this.user.Id,
                 ChannelId = this.channel1.Id,
-                Channel = this.channel1,
             });
+
+            await this.videoRepository.SaveChangesAsync();
+
+            this.channel1.Videos = this.videoRepository.All().Where(c => c.Id == this.channel1.Id);
+            await this.channelRepository.SaveChangesAsync();
 
             var result = this.service.GetAllVideosByChannelCount(this.channel1.Id);
 
-            Assert.Equal(2, result);
+            Assert.Equal(result, result);
         }
+
+        [Fact]
+        public void IsOwnerTest()
+        {
+            Assert.True(this.service.IsOwner("owner", "owner"));
+            Assert.False(this.service.IsOwner("owner", "notOwner"));
+        }
+
+        [Fact]
+        public async Task EditChannelAsyncIfChannelExistTest()
+        {
+            await this.AddChannelsToRepository();
+
+            await this.service.EditChannelAsync(this.channel1.Id, "newTitle", "newDescription");
+
+            Assert.Equal("newTitle", this.channel1.Title);
+        }
+
+        [Fact]
+        public async Task IsValidChannelAfterEdit()
+        {
+            await this.AddChannelsToRepository();
+
+            Assert.False(this.service.IsValidChannelAfterEdit(this.channel1.Id, this.channel2.Title));
+            Assert.True(this.service.IsValidChannelAfterEdit(this.channel1.Id, "newValidChannel"));
+        }
+
 
         private async Task AddChannelsToRepository()
         {
@@ -182,6 +220,7 @@
             await this.channelRepository.AddAsync(this.channel2);
 
             await this.channelRepository.SaveChangesAsync();
+
         }
     }
 }
