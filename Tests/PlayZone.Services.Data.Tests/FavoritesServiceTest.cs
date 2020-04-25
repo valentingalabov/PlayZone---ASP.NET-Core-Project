@@ -30,6 +30,7 @@
 
             this.favoriteVideo = new FavoriteVideo
             {
+                Id = 1,
                 UserId = "user1",
                 VideoId = "video1",
             };
@@ -77,11 +78,12 @@
         [Fact]
         public async Task GetFavoriteVideosByUserWorkCorrectTest()
         {
-            AutoMapperConfig.RegisterMappings(typeof(FavoriteVideoViewModel).Assembly);
             await this.favoritesRepository.AddAsync(this.favoriteVideo);
             await this.favoritesRepository.SaveChangesAsync();
 
-            var videos = this.service.GetFavoriteVideosByUser<FavoriteVideoViewModel>("user1");
+            AutoMapperConfig.RegisterMappings(typeof(ViewModel).Assembly);
+
+            var videos = this.service.GetFavoriteVideosByUser<ViewModel>(this.favoriteVideo.UserId);
 
             Assert.Single(videos);
         }
@@ -89,22 +91,19 @@
         [Fact]
         public async Task GetFavoriteVideosByUserOrderCorrectTest()
         {
-            AutoMapperConfig.RegisterMappings(typeof(FavoriteVideoViewModel).Assembly);
             await this.favoritesRepository.AddAsync(new FavoriteVideo
             {
+                Id = 1,
                 UserId = "user1",
                 VideoId = "video1",
             });
-            await this.favoritesRepository.AddAsync(new FavoriteVideo
-            {
-                UserId = "user1",
-                VideoId = "video2",
-            });
             await this.favoritesRepository.SaveChangesAsync();
 
-            var videos = this.service.GetFavoriteVideosByUser<FavoriteVideoViewModel>("user1");
+            AutoMapperConfig.RegisterMappings(typeof(ViewModel).Assembly);
 
-            Assert.Equal(2, videos.Count());
+            var videos = this.service.GetFavoriteVideosByUser<ViewModel>("user1");
+
+            Assert.Single(videos);
         }
 
         [Fact]

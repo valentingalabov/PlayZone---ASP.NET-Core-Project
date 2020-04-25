@@ -28,9 +28,22 @@
 
             this.videoHistory = new VideoHistory
             {
+                Id = 1,
                 UserId = "user1",
                 VideoId = "video1",
             };
+        }
+
+        [Fact]
+        public async Task GetVideosHistoryByUserWorkCorrecrTest()
+        {
+            await this.historyRepository.AddAsync(this.videoHistory);
+            await this.historyRepository.SaveChangesAsync();
+
+            AutoMapperConfig.RegisterMappings(typeof(VideoHistoriesViewModel).Assembly);
+            var videos = this.service.GetVideosHistoryByUser<VideoHistoriesViewModel>("user1");
+
+            Assert.Single(videos);
         }
 
         [Fact]
@@ -59,7 +72,6 @@
             await this.service.DeleteFromHistoryAsync("video1", "user1");
 
             Assert.Empty(this.historyRepository.All());
-
         }
 
         [Fact]
@@ -73,33 +85,7 @@
             Assert.Single(this.historyRepository.All());
         }
 
-        [Fact]
-        public async Task GetVideosHistoryByUserWorkCorrecrTest()
-        {
-            await this.historyRepository.AddAsync(this.videoHistory);
-            await this.historyRepository.SaveChangesAsync();
-
-            AutoMapperConfig.RegisterMappings(typeof(VideoHistoryViewModel).Assembly);
-            var videos = this.service.GetVideosHistoryByUser<VideoHistoryViewModel>("user1");
-
-            Assert.Single(videos);
-
-        }
-
-        private IPersonRepository GetInMemoryPersonRepository()
-        {
-            DbContextOptions<ApplicationDbContext> options;
-            var builder = new DbContextOptionsBuilder<PersonDataContext>();
-            builder.UseInMemoryDatabase();
-            options = builder.Options;
-            PersonDataContext personDataContext = new PersonDataContext(options);
-            personDataContext.Database.EnsureDeleted();
-            personDataContext.Database.EnsureCreated();
-            return new PersonRepository(personDataContext);
-        }
-
-
-        public class VideoHistoryViewModel : IMapFrom<VideoHistory>
+        public class VideoHistoriesViewModel : IMapFrom<VideoHistory>
         {
             public string VideoId { get; set; }
 
