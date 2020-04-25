@@ -13,7 +13,7 @@
     using PlayZone.Web.ViewModels.Channels;
     using Xunit;
 
-    public class ChannelTests
+    public class ChannelsServiceTests
     {
         private readonly EfDeletableEntityRepository<Channel> channelRepository;
         private readonly EfDeletableEntityRepository<Image> imageRepository;
@@ -26,7 +26,7 @@
         private readonly Channel channel1;
         private readonly Channel channel2;
 
-        public ChannelTests()
+        public ChannelsServiceTests()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
              .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString());
@@ -212,7 +212,6 @@
             Assert.True(this.service.IsValidChannelAfterEdit(this.channel1.Id, "newValidChannel"));
         }
 
-
         private async Task AddChannelsToRepository()
         {
             await this.channelRepository.AddAsync(this.channel1);
@@ -220,7 +219,6 @@
             await this.channelRepository.AddAsync(this.channel2);
 
             await this.channelRepository.SaveChangesAsync();
-
         }
     }
 }

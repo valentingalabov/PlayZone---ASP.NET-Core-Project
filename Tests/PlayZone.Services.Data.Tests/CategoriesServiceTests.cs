@@ -12,7 +12,7 @@
     using PlayZone.Web.ViewModels.Videos;
     using Xunit;
 
-    public class CategoryTests
+    public class CategoriesServiceTests
     {
         [Fact]
         public async Task GetAllCategoriesTest()
@@ -29,7 +29,7 @@
                 Name = "Music",
                 Description = "music Description",
             });
-    
+
             await repository.SaveChangesAsync();
 
             var service = new CategoriesService(repository);
